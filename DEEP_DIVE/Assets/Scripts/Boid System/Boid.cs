@@ -36,11 +36,11 @@ public class Boid : MonoBehaviour
         cachedTransform = transform;
     }
 
-    public void Initialize(BoidSettings settings, Transform target = null)
+    public void Initialize(BoidSettings _settings, Transform _target = null)
     {
         // Set the target and settings
-        this.settings = settings;
-        this.target = target;
+        this.settings = _settings;
+        this.target = _target;
 
         // Some initial position, forward, and velocity
         position = cachedTransform.position;
@@ -90,6 +90,15 @@ public class Boid : MonoBehaviour
         position = cachedTransform.position;
         forward = dir;
     }
+
+    #region Targeting Functions
+
+    void SetTarget(Transform _target = null)
+    {
+        target = _target;
+    }
+
+    #endregion Targeting Functions
 
     #region Collision Functions
 

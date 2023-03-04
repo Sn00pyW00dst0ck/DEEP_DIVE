@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: Demo Large Boid Settings
   m_EditorClassIdentifier: 
   minSpeed: 4
-  maxSpeed: 12
+  maxSpeed: 18
   maxSteerForce: 3
-  perceptionRadius: 5
-  avoidanceRadius: 3
+  perceptionRadius: 10
+  avoidanceRadius: 4
   alignWeight: 1.6
   cohesionWeight: 1.4
   separationWeight: 1.7
   obstacleMask:
     serializedVersion: 2
     m_Bits: 183
-  boundsRadius: 1
-  avoidCollisionWeight: 10
-  collisionAvoidDst: 5
+  boundsRadius: 1.25
+  avoidCollisionWeight: 13
+  collisionAvoidDst: 12
   targetWeight: 1

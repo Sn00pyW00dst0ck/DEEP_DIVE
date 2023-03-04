@@ -67,9 +67,9 @@ public class BoidManager : MonoBehaviour
         boids.Add(b);
     }
 
-    public void RemoveBoid()
+    public void RemoveBoid(Boid b)
     {
-        boids.RemoveAt(0);
+        boids.Remove(b);
     }
 
     #endregion Add and Remove Boids
