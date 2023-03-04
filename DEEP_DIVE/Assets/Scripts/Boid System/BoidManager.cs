@@ -7,32 +7,21 @@ public class BoidManager : MonoBehaviour
 {
     const int threadGroupSize = 1024;
 
-
     public BoidSettings settings;
     public ComputeShader compute;
-    Boid[] boids;
+    private List<Boid> boids = new List<Boid>();
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        // Find all the boids and add them to the manager's list
-        boids = FindObjectsOfType<Boid>();
-        foreach (Boid b in boids) 
-        {
-            b.Initialize(settings);
-        }
-    }
 
     // Update is called once per frame
     void Update()
     {
-        if (boids.Length == 0) { return; }
+        if (boids.Count == 0) { return; }
 
-        int numBoids = boids.Length;
+        int numBoids = boids.Count;
         BoidData[] boidData = new BoidData[numBoids];
 
         // Populate a list of boidData structs 
-        for (int i = 0; i < boids.Length; i++)
+        for (int i = 0; i < boids.Count; i++)
         {
             boidData[i].position = boids[i].position;
             boidData[i].direction = boids[i].forward;
@@ -44,7 +33,7 @@ public class BoidManager : MonoBehaviour
 
         // Pass the buffer, number of boids, and settings data to the shader
         compute.SetBuffer(0, "boids", boidDataBuffer);
-        compute.SetInt("numBoids", boids.Length);
+        compute.SetInt("numBoids", boids.Count);
         compute.SetFloat("viewRadius", settings.perceptionRadius);
         compute.SetFloat("avoidRadius", settings.avoidanceRadius);
 
@@ -56,7 +45,7 @@ public class BoidManager : MonoBehaviour
         boidDataBuffer.GetData(boidData);
 
         // Update the boids
-        for (int i = 0; i < boids.Length; i++)
+        for (int i = 0; i < boids.Count; i++)
         {
             boids[i].avgFlockHeading = boidData[i].flockHeading;
             boids[i].centreOfFlockmates = boidData[i].flockCentre;
@@ -69,6 +58,21 @@ public class BoidManager : MonoBehaviour
         // Release the 'ComputerBuffer'
         boidDataBuffer.Release();
     }
+
+
+    #region Add and Remove Boids
+    
+    public void AddBoid(Boid b)
+    {
+        boids.Add(b);
+    }
+
+    public void RemoveBoid()
+    {
+        boids.RemoveAt(0);
+    }
+
+    #endregion Add and Remove Boids
 
 
     public struct BoidData

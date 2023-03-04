@@ -26,6 +26,7 @@ public class Boid : MonoBehaviour
     // Cached Unity References For faster lookup times
     Material material;
     Transform cachedTransform;
+    Transform target;
 
     #endregion State Variables
 
@@ -35,10 +36,11 @@ public class Boid : MonoBehaviour
         cachedTransform = transform;
     }
 
-    public void Initialize(BoidSettings settings)
+    public void Initialize(BoidSettings settings, Transform target = null)
     {
         // Set the target and settings
         this.settings = settings;
+        this.target = target;
 
         // Some initial position, forward, and velocity
         position = cachedTransform.position;
@@ -52,6 +54,11 @@ public class Boid : MonoBehaviour
         Vector3 acceleration = Vector3.zero;
 
         // TODO: Follow target functions will go here
+        if (target != null )
+        {
+            Vector3 offsetToTarget = (target.position - position);
+            acceleration = SteerTowards(offsetToTarget) * settings.targetWeight;
+        }
 
         // Apply boid rules if there are flockmates
         if (numPerceivedFlockmates > 0)
@@ -83,15 +90,6 @@ public class Boid : MonoBehaviour
         position = cachedTransform.position;
         forward = dir;
     }
-
-    #region TODO: Follow Target Functions
-
-    Vector3 GetTargetDirection()
-    {
-        return Vector3.zero;
-    }
-
-    #endregion TODO: Follow Target Functions
 
     #region Collision Functions
 

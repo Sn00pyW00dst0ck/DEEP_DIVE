@@ -23,5 +23,6 @@ public class BoidSettings : ScriptableObject
     public float avoidCollisionWeight = 10;
     public float collisionAvoidDst = 5;
 
-    // TODO: Stuff about following targets
+    [Header("Miscellaneous")]
+    public float targetWeight = 1;
 }

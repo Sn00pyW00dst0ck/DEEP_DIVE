@@ -12,6 +12,8 @@ public class BoidSpawner : MonoBehaviour
 
     [Header("Spawned Boid Settings")]
     public Boid prefab;
+    public BoidSettings settings;
+    public BoidManager manager;
     public Color color;
 
     [Header("Spawner Attributes")]
@@ -25,16 +27,30 @@ public class BoidSpawner : MonoBehaviour
     {
         // Spawn requested amount of boids 
         for (int i = 0; i < spawnCount; i++)
-        {
+        {   
+            Boid boid = Instantiate(prefab);
+            boid.SetColor(color);
+            boid.transform.parent = this.transform;
+
             // Get random position and forward vectors
             Vector3 pos = transform.position + Random.insideUnitSphere * spawnRadius;
-            Boid boid = Instantiate(prefab);
             boid.transform.position = pos;
             boid.transform.forward = Random.insideUnitSphere;
+            boid.Initialize(settings);
 
-            boid.SetColor(color);
+            manager.AddBoid(boid);
         }
     }
+
+    private void Start()
+    {
+        if (settings != manager.settings)
+        {
+            Debug.LogError("settings object must match the manager's settings");
+        }
+    }
+
+    #region Gizmo Settings
 
     private void OnDrawGizmos()
     {
@@ -51,4 +67,7 @@ public class BoidSpawner : MonoBehaviour
         Gizmos.color = new Color(color.r, color.g, color.b, 0.3f);
         Gizmos.DrawSphere(transform.position, spawnRadius);
     }
+
+    #endregion Gizmo Settings
+
 }

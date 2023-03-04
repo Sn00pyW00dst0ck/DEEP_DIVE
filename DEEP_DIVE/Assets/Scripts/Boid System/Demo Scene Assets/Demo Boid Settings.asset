@@ -10,19 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec27d53e9c02b2c4ead9bfdb3a632a6a, type: 3}
-  m_Name: DemoBoidSettings
+  m_Name: Demo Boid Settings
   m_EditorClassIdentifier: 
-  minSpeed: 4
-  maxSpeed: 16
+  minSpeed: 7
+  maxSpeed: 20
   maxSteerForce: 6
-  perceptionRadius: 3
-  avoidanceRadius: 2
+  perceptionRadius: 5
+  avoidanceRadius: 3
   alignWeight: 1.6
-  cohesionWeight: 1.1
-  separationWeight: 1.3
+  cohesionWeight: 1.4
+  separationWeight: 1.7
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 55
-  boundsRadius: 0.45
+    m_Bits: 311
+  boundsRadius: 0.5
   avoidCollisionWeight: 30
-  collisionAvoidDst: 7
+  collisionAvoidDst: 9
+  targetWeight: 1
