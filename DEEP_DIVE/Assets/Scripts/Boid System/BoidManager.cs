@@ -11,6 +11,9 @@ public class BoidManager : MonoBehaviour
     public ComputeShader compute;
     private List<Boid> boids = new List<Boid>();
 
+    [SerializeField]
+    private List<Transform> targets = new List<Transform>();
+
 
     // Update is called once per frame
     void Update()

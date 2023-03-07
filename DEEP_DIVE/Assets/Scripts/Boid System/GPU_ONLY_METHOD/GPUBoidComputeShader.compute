@@ -1,0 +1,171 @@
+#define blockSize 256
+
+struct Boid {
+    float3 pos;
+    float3 vel;
+    float pad0;
+    float pad1;
+};
+
+StructuredBuffer<Boid> boidsIn;
+RWStructuredBuffer<Boid> boidsOut;
+
+// Lots of input floats for the BOID computation
+// Coule be made a struct input but this was easier
+uniform uint numBoids;
+uniform float deltaTime;
+uniform float maxSpeed;
+uniform float minSpeed;
+uniform float edgeMargin;
+uniform float visualRange;
+uniform float cohesionFactor;
+uniform float separationFactor;
+uniform float alignmentFactor;
+uniform float minDistance;
+uniform float turnSpeed;
+uniform float xBound;
+uniform float yBound;
+uniform float zBound;
+
+// Info about the grid
+StructuredBuffer<uint> gridOffsetBuffer;
+float gridCellSize;
+uint gridDimX;
+uint gridDimY;
+uint gridDimZ;
+
+uint3 getGridLocation(Boid boid) {
+    int boidX = floor(boid.pos.x / gridCellSize + gridDimX / 2);
+    int boidY = floor(boid.pos.y / gridCellSize + gridDimY / 2);
+    int boidZ = floor(boid.pos.z / gridCellSize + gridDimZ / 2);
+    return uint3(boidX, boidY, boidZ);
+}
+
+uint getGridID(uint3 pos) {
+    return (gridDimY * gridDimX * pos.z) + (gridDimX * pos.y) + pos.x;
+}
+
+
+void ApplyBoidBehaviors(inout Boid boid) {
+    float3 center = 0;
+    float3 close = 0;
+    float3 avgVel = 0;
+    uint neighbors = 0;
+
+    uint3 gridXYZ = getGridLocation(boid);
+    uint cell = getGridID(gridXYZ);
+    uint zStep = gridDimX * gridDimY;
+
+    for (uint z = cell - zStep; z <= cell + zStep; z += zStep) {
+        for (uint y = z - gridDimX; y <= z + gridDimX; y += gridDimX) {
+            uint start = gridOffsetBuffer[y - 2];
+            uint end = gridOffsetBuffer[y + 1];
+
+            // Below is basically same loop as old compute shader method, only it is over the boids within start and end grid region
+            for (uint i = start; i < end; i++) {
+                Boid other = boidsIn[i];
+                float dist = distance(boid.pos, other.pos);
+                if (dist > 0 && dist < visualRange) {
+                    if (dist < minDistance) {
+                        close += boid.pos - other.pos;
+                    }
+                    center += other.pos;
+                    avgVel += other.vel;
+                    neighbors++;
+                }
+            }
+        }
+    }
+
+    // Apply cohesion and alignment if there are neighbors
+    if (neighbors > 0) {
+        center /= neighbors;
+        avgVel /= neighbors;
+
+        boid.vel += (center - boid.pos) * (cohesionFactor * deltaTime);
+        boid.vel += (avgVel - boid.vel) * (alignmentFactor * deltaTime);
+    }
+
+    // Apply separation factor
+    boid.vel += close * (separationFactor * deltaTime);
+}
+
+// Limits speed to min and max speed values
+void LimitSpeed(inout Boid boid) {
+    float speed = length(boid.vel);
+
+    boid.vel = speed > maxSpeed ? normalize(boid.vel) * maxSpeed : boid.vel;
+    boid.vel = speed < minSpeed ? normalize(boid.vel) * minSpeed : boid.vel;
+}
+
+// EDIT BELOW FOR BETTER COLLISION
+void KeepInBounds(inout Boid boid) {
+    if (boid.pos.x < -xBound) {
+        boid.vel.x += deltaTime * turnSpeed;
+    }
+    else if (boid.pos.x > xBound) {
+        boid.vel.x -= deltaTime * turnSpeed;
+    }
+
+    if (boid.pos.y > yBound) {
+        boid.vel.y -= deltaTime * turnSpeed;
+    }
+    else if (boid.pos.y < -yBound) {
+        boid.vel.y += deltaTime * turnSpeed;
+    }
+
+    if (boid.pos.z > zBound) {
+        boid.vel.z -= deltaTime * turnSpeed;
+    }
+    else if (boid.pos.z < -zBound) {
+        boid.vel.z += deltaTime * turnSpeed;
+    }
+}
+
+/*
+Below applies the boid update logic
+*/
+#pragma kernel UpdateBoids // ID 0
+[numthreads(blockSize, 1, 1)]
+void UpdateBoids(uint3 id : SV_DispatchThreadID) {
+    if (id.x >= numBoids) { return; }
+
+    Boid boid = boidsIn[id.x];
+
+    ApplyBoidBehaviors(boid);
+    // Obstacle avoidance
+    LimitSpeed(boid);
+    KeepInBounds(boid);
+
+    boid.pos += boid.vel * deltaTime;
+
+    boidsOut[id.x] = boid;
+}
+
+
+// Basic random generation
+// https://www.reedbeta.com/blog/quick-and-easy-gpu-random-numbers-in-d3d11/
+uint randSeed;
+uint state;
+float wangHash() {
+    state = (state ^ 61) ^ (state >> 16);
+    state *= 9;
+    state = state ^ (state >> 4);
+    state *= 0x27d4eb2d;
+    state = state ^ (state >> 15);
+    return state / 4294967296.0;
+}
+float randRange(float a, float b) {
+    return wangHash() * (b - a) + a;
+}
+
+/*
+Below generates boids randomly within the entire boundary area
+*/
+#pragma kernel GenerateBoids // ID 1
+[numthreads(blockSize, 1, 1)]
+void GenerateBoids(uint3 id : SV_DispatchThreadID) {
+    state = randSeed + id.x;
+    boidsOut[id.x].pos = float3(randRange(-xBound, xBound), randRange(-yBound, yBound), randRange(-zBound, zBound));
+    boidsOut[id.x].vel = float3(randRange(-maxSpeed, maxSpeed), randRange(-maxSpeed, maxSpeed), randRange(-maxSpeed, maxSpeed));
+}
