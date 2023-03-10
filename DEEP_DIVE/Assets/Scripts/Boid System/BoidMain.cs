@@ -12,7 +12,7 @@ struct Boid3D
     float pad1;
 }
 
-public class GPU_Boid_Main : MonoBehaviour
+public class BoidMain : MonoBehaviour
 {
 
     const float blockSize = 256f;
@@ -20,7 +20,7 @@ public class GPU_Boid_Main : MonoBehaviour
     [Header("Boid Settings")]
     [SerializeField] int numBoids = 32;
     [SerializeField] float boidScale = 0.08f;
-    [SerializeField] GPU_Boid_Settings settings;
+    [SerializeField] BoidSettings settings;
 
     [Header("Allowed Area")]
     [SerializeField] float edgeMargin = 0.5f;

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d2227c7fb9e9a114181f28cfb0b99b91, type: 3}
-  m_Name: Demo GPU Settings
-  m_EditorClassIdentifier: 
+  m_Name: Demo Boid Settings
+  m_EditorClassIdentifier: Assembly-CSharp::Boid_Settings
   maxSpeed: 1.5
   minSpeed: 1.125
   turnSpeed: 4.5
@@ -21,8 +21,8 @@ MonoBehaviour:
   separationFactor: 30
   alignmentFactor: 5
   boundsRadius: 0.15
-  collisionAvoidDst: 5
+  collisionAvoidDst: 7
   avoidCollisionFactor: 30
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 1

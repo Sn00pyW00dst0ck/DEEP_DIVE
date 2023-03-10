@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class GPU_Boid_Settings : ScriptableObject
+public class BoidSettings : ScriptableObject
 {
     [Header("General")]
     [SerializeField] public float maxSpeed = 1.5f;
