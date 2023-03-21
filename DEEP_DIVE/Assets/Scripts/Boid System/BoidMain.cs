@@ -39,7 +39,7 @@ public class BoidMain : MonoBehaviour
     Mesh triangleMesh;
     GraphicsBuffer trianglePositions, triangleNormals;
     GraphicsBuffer coneTriangles, conePositions, coneNormals;
-    int vertCount = 72; // constant for the cone boid settings
+    int vertCount = 0; // constant for the cone boid settings
 
     // Kernel IDs
     int updateBoidsKernel, generateBoidsKernel;
@@ -117,9 +117,18 @@ public class BoidMain : MonoBehaviour
         #endregion Generate Boids On GPU
 
         #region Rendering Shader Setup Code
+        vertCount = boidMesh.vertexCount;
+        Vector2[] indexes = new Vector2[vertCount];
+        for (int i = 0; i < vertCount; i++)
+        {
+            indexes[i] = new Vector2(i, 0);
+        }
+        boidMesh.SetUVs(4, indexes);
 
-        rp = new RenderParams(boidMaterial);
-        rp.matProps = new MaterialPropertyBlock();
+        rp = new RenderParams(boidMaterial)
+        {
+            matProps = new MaterialPropertyBlock()
+        };
         rp.matProps.SetFloat("_Scale", boidScale);
         rp.matProps.SetBuffer("boids", boidBuffer);
         rp.shadowCastingMode = ShadowCastingMode.On;
@@ -260,7 +269,7 @@ public class BoidMain : MonoBehaviour
         // Other boid behaviors can go here
 
         // Render everything
-        Graphics.RenderPrimitives(rp, MeshTopology.Triangles, numBoids * vertCount);
+        Graphics.RenderPrimitives(rp, MeshTopology.Triangles, vertCount, numBoids);
     }
 
     void OnDestroy()
