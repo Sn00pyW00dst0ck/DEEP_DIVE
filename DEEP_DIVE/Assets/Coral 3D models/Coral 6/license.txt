@@ -1,0 +1,11 @@
+Model Information:
+* title:	Acropora gemmifera
+* source:	https://sketchfab.com/3d-models/acropora-gemmifera-78d8f157e1304820bb97cb70621ecd1c
+* author:	thehydrous (https://sketchfab.com/thehydro.us)
+
+Model License:
+* license type:	CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)
+* requirements:	Author must be credited. No commercial use. Modified versions must have the same license.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Acropora gemmifera" (https://sketchfab.com/3d-models/acropora-gemmifera-78d8f157e1304820bb97cb70621ecd1c) by thehydrous (https://sketchfab.com/thehydro.us) licensed under CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)

@@ -1,0 +1,11 @@
+Model Information:
+* title:	Favites sp.
+* source:	https://sketchfab.com/3d-models/favites-sp-7d13d94ff88347c49ba15729816f33c3
+* author:	thehydrous (https://sketchfab.com/thehydro.us)
+
+Model License:
+* license type:	CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)
+* requirements:	Author must be credited. No commercial use. Modified versions must have the same license.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Favites sp." (https://sketchfab.com/3d-models/favites-sp-7d13d94ff88347c49ba15729816f33c3) by thehydrous (https://sketchfab.com/thehydro.us) licensed under CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)

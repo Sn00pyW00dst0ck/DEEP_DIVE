@@ -1,0 +1,11 @@
+Model Information:
+* title:	Pocillopora meandrina
+* source:	https://sketchfab.com/3d-models/pocillopora-meandrina-3bacf518167b46d78fef48ef9e0b7019
+* author:	thehydrous (https://sketchfab.com/thehydro.us)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Pocillopora meandrina" (https://sketchfab.com/3d-models/pocillopora-meandrina-3bacf518167b46d78fef48ef9e0b7019) by thehydrous (https://sketchfab.com/thehydro.us) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

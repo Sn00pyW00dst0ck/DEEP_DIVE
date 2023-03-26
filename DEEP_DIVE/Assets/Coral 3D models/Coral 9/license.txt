@@ -1,0 +1,11 @@
+Model Information:
+* title:	Pocillopora verrucosa
+* source:	https://sketchfab.com/3d-models/pocillopora-verrucosa-9b897db9434a48309071385d0dd52d87
+* author:	thehydrous (https://sketchfab.com/thehydro.us)
+
+Model License:
+* license type:	CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)
+* requirements:	Author must be credited. No commercial use. Modified versions must have the same license.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Pocillopora verrucosa" (https://sketchfab.com/3d-models/pocillopora-verrucosa-9b897db9434a48309071385d0dd52d87) by thehydrous (https://sketchfab.com/thehydro.us) licensed under CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)
