@@ -205,7 +205,7 @@ public class BoidMain : MonoBehaviour
 
         // Clear indices
         gridShader.Dispatch(clearGridKernel, blocks, 1, 1);
-        
+
         // Populate grid
         gridShader.Dispatch(updateGridKernel, Mathf.CeilToInt(numBoids / blockSize), 1, 1);
 
@@ -308,7 +308,8 @@ public class BoidMain : MonoBehaviour
     #endregion Collision Functions
 
 
-    Mesh MakeTriangle()  {
+    Mesh MakeTriangle()
+    {
         Mesh mesh = new Mesh();
         float width = 0.5f;
         float height = 0.8f;
@@ -329,7 +330,7 @@ public class BoidMain : MonoBehaviour
         int[] tris = {
             0, 1, 2, // Front facing
             3, 4, 5  // Back facing
-        }; 
+        };
         mesh.triangles = tris;
         mesh.RecalculateNormals();
         return mesh;

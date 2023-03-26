@@ -44,45 +44,45 @@ Shader "Custom/3DBoidShader" {
             int vertCount;
           #endif
 
-          // Below based on some old math I did for project 1, only done in a shader now
-          void rotate3D(inout float3 v, float3 vel) {
-            float3 up = float3(0, 1, 0);
-            float3 axis = normalize(cross(up, vel));
-            float angle = acos(dot(up, normalize(vel)));
-            v = v * cos(angle) + cross(axis, v) * sin(angle) + axis * dot(axis, v) * (1. - cos(angle));
-          }
+            // Below based on some old math I did for project 1, only done in a shader now
+            void rotate3D(inout float3 v, float3 vel) {
+              float3 up = float3(0, 1, 0);
+              float3 axis = normalize(cross(up, vel));
+              float angle = acos(dot(up, normalize(vel)));
+              v = v * cos(angle) + cross(axis, v) * sin(angle) + axis * dot(axis, v) * (1. - cos(angle));
+            }
 
-          void vert(inout appdata v) {
-            //https://docs.unity3d.com/Manual/SL-BuiltinMacros.html
-            #if defined(SHADER_API_D3D11) || defined(SHADER_API_METAL)
-              uint instanceID = v.vertexID / vertCount;
-              uint instanceVertexID = v.vertexID - instanceID * vertCount;
-              Boid boid = boids[instanceID];
-              float3 pos = trianglePositions[instanceVertexID];
-              float3 normal = triangleNormals[instanceVertexID];
-              if (vertCount == 72) {
-                pos = conePositions[coneTriangles[instanceVertexID]];
-                normal = coneNormals[coneTriangles[instanceVertexID]];
+            void vert(inout appdata v) {
+                //https://docs.unity3d.com/Manual/SL-BuiltinMacros.html
+                #if defined(SHADER_API_D3D11) || defined(SHADER_API_METAL)
+                  uint instanceID = v.vertexID / vertCount;
+                  uint instanceVertexID = v.vertexID - instanceID * vertCount;
+                  Boid boid = boids[instanceID];
+                  float3 pos = trianglePositions[instanceVertexID];
+                  float3 normal = triangleNormals[instanceVertexID];
+                  if (vertCount == 72) {
+                    pos = conePositions[coneTriangles[instanceVertexID]];
+                    normal = coneNormals[coneTriangles[instanceVertexID]];
+                  }
+                  rotate3D(pos, boid.vel);
+                  v.vertex = float4((pos * _Scale) + boid.pos, 1);
+                  rotate3D(normal, boid.vel);
+                  v.normal = normal;
+                #endif
               }
-              rotate3D(pos, boid.vel);
-              v.vertex = float4((pos * _Scale) + boid.pos, 1);
-              rotate3D(normal, boid.vel);
-              v.normal = normal;
-            #endif
-          }
 
-          half _Glossiness;
-          half _Metallic;
-          fixed4 _Color;
+              half _Glossiness;
+              half _Metallic;
+              fixed4 _Color;
 
-          // Main shader function
-          void surf(Input IN, inout SurfaceOutputStandard o) {
-            o.Albedo = _Color.rgb;
-            o.Metallic = _Metallic;
-            o.Smoothness = _Glossiness;
-            o.Alpha = _Color.a;
-          }
-          ENDCG
+              // Main shader function
+              void surf(Input IN, inout SurfaceOutputStandard o) {
+                o.Albedo = _Color.rgb;
+                o.Metallic = _Metallic;
+                o.Smoothness = _Glossiness;
+                o.Alpha = _Color.a;
+              }
+              ENDCG
     }
         FallBack "Diffuse"
 }
