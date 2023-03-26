@@ -39,7 +39,7 @@ public class BoidMain : MonoBehaviour
     Mesh triangleMesh;
     GraphicsBuffer trianglePositions, triangleNormals;
     GraphicsBuffer coneTriangles, conePositions, coneNormals;
-    int vertCount = 0; // constant for the cone boid settings
+    int vertCount = 72; // constant for the cone boid settings
 
     // Kernel IDs
     int updateBoidsKernel, generateBoidsKernel;
@@ -117,18 +117,9 @@ public class BoidMain : MonoBehaviour
         #endregion Generate Boids On GPU
 
         #region Rendering Shader Setup Code
-        vertCount = boidMesh.vertexCount;
-        Vector2[] indexes = new Vector2[vertCount];
-        for (int i = 0; i < vertCount; i++)
-        {
-            indexes[i] = new Vector2(i, 0);
-        }
-        boidMesh.SetUVs(4, indexes);
 
-        rp = new RenderParams(boidMaterial)
-        {
-            matProps = new MaterialPropertyBlock()
-        };
+        rp = new RenderParams(boidMaterial);
+        rp.matProps = new MaterialPropertyBlock();
         rp.matProps.SetFloat("_Scale", boidScale);
         rp.matProps.SetBuffer("boids", boidBuffer);
         rp.shadowCastingMode = ShadowCastingMode.On;
@@ -214,7 +205,7 @@ public class BoidMain : MonoBehaviour
 
         // Clear indices
         gridShader.Dispatch(clearGridKernel, blocks, 1, 1);
-        
+
         // Populate grid
         gridShader.Dispatch(updateGridKernel, Mathf.CeilToInt(numBoids / blockSize), 1, 1);
 
@@ -269,7 +260,7 @@ public class BoidMain : MonoBehaviour
         // Other boid behaviors can go here
 
         // Render everything
-        Graphics.RenderPrimitives(rp, MeshTopology.Triangles, vertCount, numBoids);
+        Graphics.RenderPrimitives(rp, MeshTopology.Triangles, numBoids * vertCount);
     }
 
     void OnDestroy()
@@ -317,7 +308,8 @@ public class BoidMain : MonoBehaviour
     #endregion Collision Functions
 
 
-    Mesh MakeTriangle()  {
+    Mesh MakeTriangle()
+    {
         Mesh mesh = new Mesh();
         float width = 0.5f;
         float height = 0.8f;
@@ -338,7 +330,7 @@ public class BoidMain : MonoBehaviour
         int[] tris = {
             0, 1, 2, // Front facing
             3, 4, 5  // Back facing
-        }; 
+        };
         mesh.triangles = tris;
         mesh.RecalculateNormals();
         return mesh;
