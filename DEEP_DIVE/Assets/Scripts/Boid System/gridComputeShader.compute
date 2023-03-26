@@ -1,0 +1,136 @@
+//https://on-demand.gputechconf.com/gtc/2014/presentations/S4117-fast-fixed-radius-nearest-neighbor-gpu.pdf
+#define blockSize 256
+
+struct Boid {
+    float3 pos;
+    float3 vel;
+    float pad0;
+    float pad1;
+};
+
+StructuredBuffer<Boid> boids; // list of boids as input
+RWStructuredBuffer<Boid> boidsOut; // list of boids sorted into grid order as output
+RWStructuredBuffer<uint2> gridBuffer; // buffer size = boids length for where boids will be in grid
+RWStructuredBuffer<uint> gridOffsetBuffer; // Used for prefix sums 
+StructuredBuffer<uint> gridOffsetBufferIn; // Used for prefix sums
+RWStructuredBuffer<uint> gridSumsBuffer; // Used in sorting
+StructuredBuffer<uint> gridSumsBufferIn; // Used in sorting
+
+// Grid information to be used
+float gridCellSize;
+uint gridDimX;
+uint gridDimY;
+uint gridDimZ;
+uint gridTotalCells;
+uint blocks;
+uint numBoids;
+uint d;
+
+// HELPER FUNCTION
+uint getGridID(Boid boid) {
+    int boidX = floor(boid.pos.x / gridCellSize + gridDimX / 2);
+    int boidY = floor(boid.pos.y / gridCellSize + gridDimY / 2);
+    int boidZ = floor(boid.pos.z / gridCellSize + gridDimZ / 2);
+    return (gridDimY * gridDimX * boidZ) + (gridDimX * boidY) + boidX;
+}
+
+/*
+Below puts boids into the grid initially
+*/
+#pragma kernel UpdateGrid // ID 0
+[numthreads(blockSize, 1, 1)]
+void UpdateGrid(uint3 id : SV_DispatchThreadID) {
+    if (id.x >= numBoids) { return; }
+
+    int gridID = getGridID(boids[id.x]);
+    gridBuffer[id.x].x = gridID;
+    InterlockedAdd(gridOffsetBuffer[gridID], 1, gridBuffer[id.x].y);
+}
+
+/*
+Below resets the grid offset buffer to all 0
+*/
+#pragma kernel ClearGrid // ID 1
+[numthreads(blockSize, 1, 1)]
+void ClearGrid(uint3 id : SV_DispatchThreadID) {
+    if (id.x >= gridTotalCells) { return; }
+
+    gridOffsetBuffer[id.x] = 0;
+}
+
+/*
+Below uses groupsharing (thread shared memory) to determine Prefix sum used in sorting later
+Read about prefix sum below, and to see the pseudocode that inspired this:
+https://en.wikipedia.org/wiki/Prefix_sum
+https://en.wikipedia.org/wiki/Counting_sort
+*/
+groupshared int temp[blockSize * 2];
+#pragma kernel PrefixSum // ID 2
+[numthreads(blockSize, 1, 1)]
+void PrefixSum(uint globalID : SV_DispatchThreadID, uint localID : SV_GROUPTHREADID, uint groupID : SV_GROUPID) {
+    int pout = 0, pin = 1;
+    temp[localID] = gridOffsetBufferIn[globalID];
+    GroupMemoryBarrierWithGroupSync();
+
+    // Unroll tells compiler to make this loop be unfurled into repeated instructions
+    // Would probably work without unroll I just thought it was neat when investigating Unity stuff
+    // Based on Hillis and Steele parallel prefix sum algorithm pseudocode on wikepedia:
+    [unroll]
+    for (uint offset = 1; offset < blockSize; offset *= 2) {
+        pout = 1 - pout; // swap double buffer indices
+        pin = 1 - pout;
+        if (localID >= offset) {
+            temp[pout * blockSize + localID] = temp[pin * blockSize + localID] + temp[pin * blockSize + localID - offset];
+        }
+        else {
+            temp[pout * blockSize + localID] = temp[pin * blockSize + localID];
+        }
+        GroupMemoryBarrierWithGroupSync();
+    }
+
+    // Don't write out of bounds
+    if (globalID >= gridTotalCells) { return; }
+
+    gridOffsetBuffer[globalID] = temp[pout * blockSize + localID];
+    if (localID == 0) { gridSumsBuffer[groupID] = temp[pout * blockSize + blockSize - 1]; }
+}
+
+/*
+Below rearranges the boids into output buffer based on its position in the grid using some math
+Pseudocode of 3rd for loop innards are used here, as the process is now parallel
+https://en.wikipedia.org/wiki/Counting_sort
+*/
+#pragma kernel RearrangeBoids // ID 3
+[numthreads(blockSize, 1, 1)]
+void RearrangeBoids(uint3 id : SV_DispatchThreadID) {
+    if (id.x >= numBoids) { return; }
+
+    uint gridID = gridBuffer[id.x].x;
+    uint cellOffset = gridBuffer[id.x].y;
+    uint index = gridOffsetBuffer[gridID] - 1 - cellOffset;
+    boidsOut[index] = boids[id.x];
+}
+
+/*
+Below updates the sums buffer (used in prefix sorting) for every block based on given parameter 'd'
+*/
+#pragma kernel SumBlocks // ID 4
+[numthreads(blockSize, 1, 1)]
+void SumBlocks(uint3 id : SV_DISPATCHTHREADID) {
+    if (id.x >= blocks) { return; }
+
+    uint k = id.x;
+    gridSumsBuffer[k] = gridSumsBufferIn[k];
+    if (k >= d) { gridSumsBuffer[k] += gridSumsBufferIn[k - d]; }
+}
+
+/*
+Below updates the offset buffer based on the sums input buffer
+*/
+#pragma kernel AddSums // ID 5
+[numthreads(blockSize, 1, 1)]
+void AddSums(uint globalID : SV_DISPATCHTHREADID, uint groupID : SV_GROUPID) {
+    if (groupID == 0 || globalID > gridTotalCells) { return; }
+
+    gridOffsetBuffer[globalID] += gridSumsBufferIn[groupID - 1];
+}
