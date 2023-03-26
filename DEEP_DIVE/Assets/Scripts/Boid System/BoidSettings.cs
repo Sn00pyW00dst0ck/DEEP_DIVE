@@ -5,23 +5,21 @@ using UnityEngine;
 [CreateAssetMenu]
 public class BoidSettings : ScriptableObject
 {
-    [Header("General Settings")]
-    public float minSpeed = 2;
-    public float maxSpeed = 5;
-    public float maxSteerForce = 3;
-    public float perceptionRadius = 2.5f;
-    public float avoidanceRadius = 1;
+    [Header("General")]
+    [SerializeField] public float maxSpeed = 1.5f;
+    [SerializeField] public float minSpeed = 1.125f;
+    [SerializeField] public float turnSpeed = 4.5f;
+    [SerializeField] public float visualRange = 0.5f;
+    [SerializeField] public float minDistance = 0.15f;
 
     [Header("Steering Weights")]
-    public float alignWeight = 1;
-    public float cohesionWeight = 1;
-    public float separationWeight = 1;
+    [SerializeField] public float cohesionFactor = 1;
+    [SerializeField] public float separationFactor = 30;
+    [SerializeField] public float alignmentFactor = 5;
 
-    [Header("Collisions")]
-    public LayerMask obstacleMask;
-    public float boundsRadius = .27f;
-    public float avoidCollisionWeight = 10;
-    public float collisionAvoidDst = 5;
-
-    // TODO: Stuff about following targets
+    [Header("Obstacle Avoidance")]
+    [SerializeField] public float boundsRadius = 0.15f;
+    [SerializeField] public float collisionAvoidDst = 7;
+    [SerializeField] public float avoidCollisionFactor = 30;
+    [SerializeField] public LayerMask obstacleMask;
 }
