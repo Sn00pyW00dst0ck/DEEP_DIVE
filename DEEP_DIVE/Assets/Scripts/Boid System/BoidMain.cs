@@ -33,7 +33,6 @@ public class BoidMain : MonoBehaviour
     [SerializeField] ComputeShader gridShader;
     [SerializeField] Material boidMaterial;
     [SerializeField] Mesh boidMesh;
-    [SerializeField] Transform floorPlane;
 
     // Render Info
     RenderParams rp;
@@ -69,8 +68,6 @@ public class BoidMain : MonoBehaviour
         #region Set Boid Boundaries
 
         // Set environment bounds information
-        floorPlane.localScale = new Vector3(spaceBounds / 2.5f, 1, spaceBounds / 2.5f);
-        floorPlane.position = new Vector3(0, -spaceBounds - 1f, 0);
         xBound = 2 * (spaceBounds - edgeMargin);
         yBound = (spaceBounds - edgeMargin);
         zBound = 2 * (spaceBounds - edgeMargin);
@@ -157,7 +154,6 @@ public class BoidMain : MonoBehaviour
         gridOffsetBuffer = new ComputeBuffer(gridTotalCells, 4);
         gridOffsetBufferIn = new ComputeBuffer(gridTotalCells, 4);
         blocks = Mathf.CeilToInt(gridTotalCells / blockSize);
-        UnityEngine.Debug.Log(blocks);
         gridSumsBuffer = new ComputeBuffer(blocks, 4);
         gridSumsBuffer2 = new ComputeBuffer(blocks, 4);
         gridShader.SetInt("numBoids", numBoids);
