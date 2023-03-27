@@ -17,6 +17,7 @@ Shader "Custom/3DBoidShader" {
           struct appdata {
             float4 vertex : POSITION;
             float3 normal : NORMAL;
+            float4 tangent: TANGENT;
             float4 texcoord1 : TEXCOORD1;
             float4 texcoord2 : TEXCOORD2;
             uint vertexID : SV_VertexID;
@@ -35,13 +36,11 @@ Shader "Custom/3DBoidShader" {
 
           float _Scale;
           #if defined(SHADER_API_D3D11) || defined(SHADER_API_METAL)
-            StructuredBuffer<float3> trianglePositions;
-            StructuredBuffer<float3> triangleNormals;
             StructuredBuffer<float3> conePositions;
             StructuredBuffer<float3> coneNormals;
             StructuredBuffer<int> coneTriangles;
             StructuredBuffer<Boid> boids;
-            int vertCount;
+            int triangleCount;
           #endif
 
             // Below based on some old math I did for project 1, only done in a shader now
@@ -55,15 +54,11 @@ Shader "Custom/3DBoidShader" {
             void vert(inout appdata v) {
                 //https://docs.unity3d.com/Manual/SL-BuiltinMacros.html
                 #if defined(SHADER_API_D3D11) || defined(SHADER_API_METAL)
-                  uint instanceID = v.vertexID / vertCount;
-                  uint instanceVertexID = v.vertexID - instanceID * vertCount;
+                  uint instanceID = v.vertexID / triangleCount;
+                  uint instanceVertexID = v.vertexID - instanceID * triangleCount;
                   Boid boid = boids[instanceID];
-                  float3 pos = trianglePositions[instanceVertexID];
-                  float3 normal = triangleNormals[instanceVertexID];
-                  if (vertCount == 72) {
-                    pos = conePositions[coneTriangles[instanceVertexID]];
-                    normal = coneNormals[coneTriangles[instanceVertexID]];
-                  }
+                  float3 pos = conePositions[coneTriangles[instanceVertexID]];
+                  float3 normal = coneNormals[coneTriangles[instanceVertexID]];
                   rotate3D(pos, boid.vel);
                   v.vertex = float4((pos * _Scale) + boid.pos, 1);
                   rotate3D(normal, boid.vel);

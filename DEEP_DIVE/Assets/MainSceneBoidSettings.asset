@@ -17,9 +17,9 @@ MonoBehaviour:
   turnSpeed: 4
   visualRange: 1.5
   minDistance: 1.2
-  cohesionFactor: 1
+  cohesionFactor: 42
   separationFactor: 30
-  alignmentFactor: 5
+  alignmentFactor: 9
   boundsRadius: 1.5
   collisionAvoidDst: 5
   avoidCollisionFactor: 30

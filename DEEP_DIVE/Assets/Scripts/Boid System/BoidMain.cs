@@ -36,10 +36,8 @@ public class BoidMain : MonoBehaviour
 
     // Render Info
     RenderParams rp;
-    Mesh triangleMesh;
-    GraphicsBuffer trianglePositions, triangleNormals;
     GraphicsBuffer coneTriangles, conePositions, coneNormals;
-    int vertCount = 72; // constant for the cone boid settings
+    int triangleCount; // constant for the cone boid settings
 
     // Kernel IDs
     int updateBoidsKernel, generateBoidsKernel;
@@ -57,11 +55,6 @@ public class BoidMain : MonoBehaviour
     // Index is particle ID, x value is position flattened to 1D array, y value is grid cell offset
     int gridDimY, gridDimX, gridDimZ, gridTotalCells, blocks;
     float gridCellSize;
-
-    void Awake()
-    {
-        triangleMesh = MakeTriangle();
-    }
 
     void Start()
     {
@@ -115,7 +108,9 @@ public class BoidMain : MonoBehaviour
         #endregion Generate Boids On GPU
 
         #region Rendering Shader Setup Code
-
+        // Get required variable from model
+        this.triangleCount = boidMesh.triangles.Length;
+        
         rp = new RenderParams(boidMaterial);
         rp.matProps = new MaterialPropertyBlock();
         rp.matProps.SetFloat("_Scale", boidScale);
@@ -123,12 +118,6 @@ public class BoidMain : MonoBehaviour
         rp.shadowCastingMode = ShadowCastingMode.On;
         rp.receiveShadows = true;
         rp.worldBounds = new Bounds(Vector3.zero, Vector3.one * 100);
-        trianglePositions = new GraphicsBuffer(GraphicsBuffer.Target.Structured, 6, 12);
-        trianglePositions.SetData(triangleMesh.vertices);
-        triangleNormals = new GraphicsBuffer(GraphicsBuffer.Target.Structured, triangleMesh.normals.Length, 3 * sizeof(float));
-        triangleNormals.SetData(triangleMesh.normals);
-        rp.matProps.SetBuffer("trianglePositions", trianglePositions);
-        rp.matProps.SetBuffer("triangleNormals", triangleNormals);
         coneTriangles = new GraphicsBuffer(GraphicsBuffer.Target.Structured, boidMesh.triangles.Length, sizeof(int));
         coneTriangles.SetData(boidMesh.triangles);
         conePositions = new GraphicsBuffer(GraphicsBuffer.Target.Structured, boidMesh.vertices.Length, 3 * sizeof(float));
@@ -138,7 +127,7 @@ public class BoidMain : MonoBehaviour
         rp.matProps.SetBuffer("coneTriangles", coneTriangles);
         rp.matProps.SetBuffer("conePositions", conePositions);
         rp.matProps.SetBuffer("coneNormals", coneNormals);
-        rp.matProps.SetInteger("vertCount", vertCount);
+        rp.matProps.SetInteger("triangleCount", triangleCount);
 
         #endregion Rendering Shader Setup Code
 
@@ -258,7 +247,7 @@ public class BoidMain : MonoBehaviour
         // Other boid behaviors can go here
 
         // Render everything
-        Graphics.RenderPrimitives(rp, MeshTopology.Triangles, numBoids * vertCount);
+        Graphics.RenderPrimitives(rp, MeshTopology.Triangles, numBoids * triangleCount);
     }
 
     void OnDestroy()
@@ -271,8 +260,6 @@ public class BoidMain : MonoBehaviour
         gridOffsetBufferIn.Release();
         gridSumsBuffer.Release();
         gridSumsBuffer2.Release();
-        trianglePositions.Release();
-        triangleNormals.Release();
         conePositions.Release();
         coneTriangles.Release();
         coneNormals.Release();
@@ -305,32 +292,4 @@ public class BoidMain : MonoBehaviour
 
     #endregion Collision Functions
 
-
-    Mesh MakeTriangle()
-    {
-        Mesh mesh = new Mesh();
-        float width = 0.5f;
-        float height = 0.8f;
-
-        // Duplicate vertices to get back face lighting
-        Vector3[] vertices = {
-            // Front face
-            new Vector3(-width, -height, 0),
-            new Vector3(0, height, 0),
-            new Vector3(width, -height, 0),
-            // Back face
-            new Vector3(width, -height, 0),
-            new Vector3(0, height, 0),
-            new Vector3(-width, -height, 0),
-        };
-        mesh.vertices = vertices;
-
-        int[] tris = {
-            0, 1, 2, // Front facing
-            3, 4, 5  // Back facing
-        };
-        mesh.triangles = tris;
-        mesh.RecalculateNormals();
-        return mesh;
-    }
 }

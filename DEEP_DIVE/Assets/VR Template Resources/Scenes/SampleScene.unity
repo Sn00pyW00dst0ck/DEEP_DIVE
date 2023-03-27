@@ -19,7 +19,7 @@ RenderSettings:
   m_FogMode: 1
   m_FogDensity: 0.01
   m_LinearFogStart: 0
-  m_LinearFogEnd: 150
+  m_LinearFogEnd: 250
   m_AmbientSkyColor: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
   m_AmbientEquatorColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 1}
   m_AmbientGroundColor: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
@@ -2584,14 +2584,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numBoids: 2000
-  boidScale: 1
+  boidScale: 6
   settings: {fileID: 11400000, guid: 788edd8ab4a12c146a47d44e92b32757, type: 2}
   edgeMargin: 0.5
   spaceBounds: 70
   boidComputeShader: {fileID: 7200000, guid: 41fb68aebe52bbd47a71c90027ae848f, type: 3}
   gridShader: {fileID: 7200000, guid: a4a60226fd61b784a8c947709a40402f, type: 3}
   boidMaterial: {fileID: 2100000, guid: 9bbef1799fa1d534e9a24e8bb7177e80, type: 2}
-  boidMesh: {fileID: 4300000, guid: 166cee2bf745d414ba76731a7ab98fd4, type: 2}
+  boidMesh: {fileID: 4300000, guid: 39d1d561405e53c4fb35e73a03627611, type: 3}
 --- !u!4 &1655560297
 Transform:
   m_ObjectHideFlags: 0
