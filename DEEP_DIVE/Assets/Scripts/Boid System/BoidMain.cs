@@ -117,7 +117,7 @@ public class BoidMain : MonoBehaviour
         rp.matProps.SetBuffer("boids", boidBuffer);
         rp.shadowCastingMode = ShadowCastingMode.On;
         rp.receiveShadows = true;
-        rp.worldBounds = new Bounds(Vector3.zero, Vector3.one * 100);
+        rp.worldBounds = new Bounds(Vector3.zero, Vector3.one * 1000);
         coneTriangles = new GraphicsBuffer(GraphicsBuffer.Target.Structured, boidMesh.triangles.Length, sizeof(int));
         coneTriangles.SetData(boidMesh.triangles);
         conePositions = new GraphicsBuffer(GraphicsBuffer.Target.Structured, boidMesh.vertices.Length, 3 * sizeof(float));
