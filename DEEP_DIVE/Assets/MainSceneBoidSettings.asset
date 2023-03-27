@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2227c7fb9e9a114181f28cfb0b99b91, type: 3}
+  m_Name: MainSceneBoidSettings
+  m_EditorClassIdentifier: 
+  maxSpeed: 20
+  minSpeed: 5
+  turnSpeed: 4
+  visualRange: 1.5
+  minDistance: 1.2
+  cohesionFactor: 1
+  separationFactor: 30
+  alignmentFactor: 5
+  boundsRadius: 1.5
+  collisionAvoidDst: 5
+  avoidCollisionFactor: 30
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 1
