@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
@@ -11,6 +12,11 @@ struct Boid3D
     public Vector3 vel;
     float pad0;
     float pad1;
+}
+struct Sphere
+{
+    public Vector3 position;
+    public float radius;
 }
 
 public class BoidMain : MonoBehaviour
@@ -51,6 +57,9 @@ public class BoidMain : MonoBehaviour
     ComputeBuffer gridOffsetBufferIn;
     ComputeBuffer gridSumsBuffer;
     ComputeBuffer gridSumsBuffer2;
+    
+    ComputeBuffer turnDirectionsBuffer;
+    ComputeBuffer sphereCollidersBuffer;
 
     // Index is particle ID, x value is position flattened to 1D array, y value is grid cell offset
     int gridDimY, gridDimX, gridDimZ, gridTotalCells, blocks;
@@ -97,6 +106,33 @@ public class BoidMain : MonoBehaviour
         boidComputeShader.SetFloat("yBound", yBound);
         boidComputeShader.SetFloat("zBound", zBound);
 
+        // Setting up the Colliders inputs to compute shader
+        Vector3[] rayDirections = DirectionVectorGenerator.directions;
+        turnDirectionsBuffer = new ComputeBuffer(rayDirections.Length, 12);
+        turnDirectionsBuffer.SetData(rayDirections);
+        boidComputeShader.SetBuffer(updateBoidsKernel, "turnDirections", turnDirectionsBuffer);
+        boidComputeShader.SetInt("numTurnDirections", rayDirections.Length);
+        List<SphereCollider> spheres = FindSphereCollidersOnLayer(9);
+        List<Sphere> data = new();
+        for (int i = 0; i < spheres.Count; i++)
+        {
+            Sphere current = new()
+            {
+                position = spheres[i].transform.TransformPoint(spheres[i].center),
+                radius = spheres[i].radius
+            };
+            data.Add(current);
+            Debug.Log(data[i]);
+            Debug.Log(data[i].position);
+            Debug.Log(data[i].radius);
+        }
+        sphereCollidersBuffer = new ComputeBuffer(data.Count, 16);
+        sphereCollidersBuffer.SetData(data);
+        boidComputeShader.SetBuffer(updateBoidsKernel, "spheresBuffer", sphereCollidersBuffer);
+        boidComputeShader.SetInt("numSpheres", data.Count);
+        boidComputeShader.SetFloat("boidObstacleAvoidDist", settings.collisionAvoidDst);
+        boidComputeShader.SetFloat("avoidCollisionFactor", settings.avoidCollisionFactor);
+
         #endregion Setup boidComputeShader Inputs
 
         #region Generate Boids On GPU
@@ -115,8 +151,8 @@ public class BoidMain : MonoBehaviour
         rp.matProps = new MaterialPropertyBlock();
         rp.matProps.SetFloat("_Scale", boidScale);
         rp.matProps.SetBuffer("boids", boidBuffer);
-        rp.shadowCastingMode = ShadowCastingMode.On;
-        rp.receiveShadows = true;
+        rp.shadowCastingMode = ShadowCastingMode.Off;
+        rp.receiveShadows = false;
         rp.worldBounds = new Bounds(Vector3.zero, Vector3.one * 1000);
         coneTriangles = new GraphicsBuffer(GraphicsBuffer.Target.Structured, boidMesh.triangles.Length, sizeof(int));
         coneTriangles.SetData(boidMesh.triangles);
@@ -226,22 +262,22 @@ public class BoidMain : MonoBehaviour
         boidComputeShader.Dispatch(updateBoidsKernel, Mathf.CeilToInt(numBoids / blockSize), 1, 1);
 
         #region Obstacle Avoidance
-
+        
         // Look into doing parallel collision detections with batching raycasts for better performance.
         // Transformation from forward to direction to check is not 100% right
-        Boid3D[] boids = new Boid3D[numBoids];
-        boidBuffer.GetData(boids);
-        for (int i = 0; i < numBoids; i++)
-        {
-            // If there is an obstacle, get a direction to avoid the obstacle, then steer that way
-            if (IsHeadingForCollision(boids[i]))
-            {
-                boids[i].vel += (GetNotCollidingDirection(boids[i]).normalized * settings.maxSpeed - boids[i].vel) * settings.avoidCollisionFactor;
-                Vector3.ClampMagnitude(boids[i].vel, settings.maxSpeed);
-            }
-        }
-        boidBuffer.SetData(boids);
-
+        // Boid3D[] boids = new Boid3D[numBoids];
+        // boidBuffer.GetData(boids);
+        // for (int i = 0; i < numBoids; i++)
+        // {
+        //     // If there is an obstacle, get a direction to avoid the obstacle, then steer that way
+        //     if (IsHeadingForCollision(boids[i]))
+        //     {
+        //         boids[i].vel += (GetNotCollidingDirection(boids[i]).normalized * settings.maxSpeed - boids[i].vel) * settings.avoidCollisionFactor;
+        //         Vector3.ClampMagnitude(boids[i].vel, settings.maxSpeed);
+        //     }
+        // }
+        // boidBuffer.SetData(boids);
+        
         #endregion Obstacle Avoidance
 
         // Other boid behaviors can go here
@@ -263,6 +299,9 @@ public class BoidMain : MonoBehaviour
         conePositions.Release();
         coneTriangles.Release();
         coneNormals.Release();
+
+        sphereCollidersBuffer.Release();
+        turnDirectionsBuffer.Release();
     }
 
     #region Collision Functions
@@ -292,4 +331,41 @@ public class BoidMain : MonoBehaviour
 
     #endregion Collision Functions
 
+
+    #region Finding Game Objects Functions
+
+    List<SphereCollider> FindSphereCollidersOnLayer(int layer)
+    {
+        List<SphereCollider> collidersList = new List<SphereCollider>();
+        List<GameObject> objs = FindGameObjectsWithLayer(layer);
+        foreach (GameObject obj in objs)
+        {
+            SphereCollider[] colliders = obj.transform.GetComponents<SphereCollider>();
+            int length = colliders.Length;
+
+            if (length == 0) { continue; }
+            foreach (SphereCollider collider in colliders)
+            {
+                collidersList.Add(collider);
+            }
+        }
+        return collidersList;
+    }
+
+    List<GameObject> FindGameObjectsWithLayer(int layer)  {
+        var goArray = FindObjectsOfType(typeof(GameObject)) as GameObject[];
+        var goList = new System.Collections.Generic.List<GameObject>();
+        for (var i = 0; i<goArray.Length; i++) {
+            if (goArray[i].layer == layer) {
+                goList.Add(goArray[i]);
+            }
+        }
+        if (goList.Count == 0)
+        {
+            return null;
+        }
+        return goList;
+    }
+
+    #endregion Finding Game Objects Functions
 }

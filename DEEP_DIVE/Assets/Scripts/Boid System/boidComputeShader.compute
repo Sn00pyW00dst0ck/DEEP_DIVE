@@ -46,6 +46,70 @@ uint getGridID(uint3 pos) {
 }
 
 
+// Info about Collisions
+struct Ray {
+    float3 origin;
+    float3 dir;
+};
+struct HitInfo {
+    bool didHit;
+    float dist;
+    float3 hitPoint;
+};
+struct Sphere {
+    float3 position;
+    float radius;
+};
+StructuredBuffer<float3> turnDirections;
+int numTurnDirections;
+StructuredBuffer<Sphere> spheresBuffer;
+int numSpheres;
+float boidObstacleAvoidDist;
+float avoidCollisionFactor;
+
+// Calculate intersects between a ray and different geometries
+HitInfo RaySphereIntersect(Ray r, float3 sphereCenter, float radius) {
+    HitInfo result = (HitInfo)0;
+    float3 offsetRayOrigin = r.origin - sphereCenter;
+
+    // Use Quadratic Formula To Calculate Intersection
+    float a = dot(r.dir, r.dir);
+    float b = 2 * dot(offsetRayOrigin, r.dir);
+    float c = dot(offsetRayOrigin, offsetRayOrigin) - (radius * radius);
+    float descriminant = b * b - 4 * a * c;
+
+    if (descriminant >= 0) {
+        float dist = (-b - sqrt(descriminant)) / (2 * a);
+
+        if (dist >= 0) {
+            result.didHit = true;
+            result.dist = dist;
+            result.hitPoint = r.origin + (r.dir * dist);
+        }
+    }
+    return result;
+}
+
+// Calculate a collision for a ray
+HitInfo CalculateRayCollision(Ray r) {
+    HitInfo closestHit = (HitInfo)0;
+    closestHit.dist = 1.#INF;
+
+    // Loop over all spheres and try to intersect, if closer than prev then update closest
+    for (int i = 0; i < numSpheres; i++) {
+        HitInfo curr = RaySphereIntersect(r, spheresBuffer[i].position, spheresBuffer[i].radius);
+        if (curr.didHit && curr.dist < closestHit.dist) {
+            closestHit = curr;
+        }
+    }
+
+    return closestHit;
+}
+
+
+
+
+
 void ApplyBoidBehaviors(inout Boid boid) {
     float3 center = 0;
     float3 close = 0;
@@ -90,6 +154,28 @@ void ApplyBoidBehaviors(inout Boid boid) {
     boid.vel += close * (separationFactor * deltaTime);
 }
 
+void ApplyCollisionBehavior(inout Boid boid) {
+    // Obstacle avoidance
+    Ray boidRay = (Ray)0;
+    boidRay.origin = boid.pos;
+    boidRay.dir = normalize(boid.vel);
+    HitInfo nextCollision = CalculateRayCollision(boidRay);
+    if (nextCollision.didHit && nextCollision.dist < boidObstacleAvoidDist) {
+        for (int i = 0; i < numTurnDirections; i++) {
+            boidRay.dir = turnDirections[i];
+            nextCollision = CalculateRayCollision(boidRay);
+            if (nextCollision.didHit == false || nextCollision.dist > boidObstacleAvoidDist) {
+                boid.vel += (boidRay.dir * (avoidCollisionFactor * 3 * deltaTime));
+                return;
+            }
+        }
+        // Calculate new velocity for turn
+        // foreach turnDirection
+        // Calculate new ray direction
+        // Perform sphere collision (if not hit accept new direction)
+    }
+}
+
 // Limits speed to min and max speed values
 void LimitSpeed(inout Boid boid) {
     float speed = length(boid.vel);
@@ -98,7 +184,6 @@ void LimitSpeed(inout Boid boid) {
     boid.vel = speed < minSpeed ? normalize(boid.vel) * minSpeed : boid.vel;
 }
 
-// EDIT BELOW FOR BETTER COLLISION
 void KeepInBounds(inout Boid boid) {
     if (boid.pos.x < -xBound) {
         boid.vel.x += deltaTime * turnSpeed;
@@ -131,16 +216,22 @@ void UpdateBoids(uint3 id : SV_DispatchThreadID) {
     if (id.x >= numBoids) { return; }
 
     Boid boid = boidsIn[id.x];
-
+    
     ApplyBoidBehaviors(boid);
-    // Obstacle avoidance
+    ApplyCollisionBehavior(boid);
+
+    // Limit speed and keep in bounds
     LimitSpeed(boid);
     KeepInBounds(boid);
 
+    // update position by velocity
     boid.pos += boid.vel * deltaTime;
 
     boidsOut[id.x] = boid;
 }
+
+
+
 
 
 // Basic random generation

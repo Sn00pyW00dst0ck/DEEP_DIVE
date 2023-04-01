@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2227c7fb9e9a114181f28cfb0b99b91, type: 3}
   m_Name: MainSceneBoidSettings
   m_EditorClassIdentifier: 
-  maxSpeed: 20
-  minSpeed: 5
-  turnSpeed: 4
-  visualRange: 1.5
-  minDistance: 1.2
+  maxSpeed: 30
+  minSpeed: 17
+  turnSpeed: 30
+  visualRange: 3
+  minDistance: 1.4
   cohesionFactor: 42
   separationFactor: 30
-  alignmentFactor: 9
+  alignmentFactor: 17
   boundsRadius: 1.5
-  collisionAvoidDst: 5
+  collisionAvoidDst: 50
   avoidCollisionFactor: 30
   obstacleMask:
     serializedVersion: 2

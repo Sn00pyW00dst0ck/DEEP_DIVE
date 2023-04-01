@@ -1,4 +1,5 @@
 //https://www.kodeco.com/5671826-introduction-to-shaders-in-unity
+// Shadows are slowing the GPU down A LOT
 Shader "Custom/3DBoidShader" {
     Properties{
       _Color("Color", Color) = (1, 1, 1, 1)
@@ -11,7 +12,7 @@ Shader "Custom/3DBoidShader" {
         LOD 200
 
         CGPROGRAM
-        #pragma surface surf Standard vertex:vert addshadow fullforwardshadows
+        #pragma surface surf Standard vertex:vert  addshadow fullforwardshadows
         #pragma target 3.0
 
         struct appdata {
