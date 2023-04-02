@@ -165,7 +165,7 @@ void ApplyCollisionBehavior(inout Boid boid) {
             boidRay.dir = turnDirections[i];
             nextCollision = CalculateRayCollision(boidRay);
             if (nextCollision.didHit == false || nextCollision.dist > boidObstacleAvoidDist) {
-                boid.vel += (boidRay.dir * (avoidCollisionFactor * 3 * deltaTime));
+                boid.vel = (boidRay.dir * (avoidCollisionFactor));
                 return;
             }
         }
