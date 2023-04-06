@@ -655,7 +655,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &403705539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -752,7 +752,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 983022187}
-  character: {fileID: 1725982596}
 --- !u!850595691 &424183132
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -2587,6 +2586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   underwaterEffects: {fileID: 1613331884}
+  healthBar: {fileID: 403705538}
 --- !u!114 &1200766010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2995,8 +2995,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkingSpeed: 7.5
   runningSpeed: 11.5
-  jumpSpeed: 8
-  gravity: 20
+  jumpSpeed: 70
+  gravity: 10
   playerCamera: {fileID: 0}
   lookSpeed: 2
   lookXLimit: 45
