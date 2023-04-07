@@ -9,15 +9,26 @@ public class UnderwaterEffects : MonoBehaviour
     [SerializeField]
     GameObject underwaterEffects;
 
+    [SerializeField]
+    GameObject[] underwaterTerrains;
+
     private void OnTriggerEnter(Collider other)
     {
         RenderSettings.fog = true;
         underwaterEffects.SetActive(true);
+        foreach (GameObject obj in underwaterTerrains)
+        {
+            obj.SetActive(true);
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         RenderSettings.fog = false;
         underwaterEffects.SetActive(false);
+        foreach (GameObject obj in underwaterTerrains)
+        {
+            obj.SetActive(false);
+        }
     }
 }

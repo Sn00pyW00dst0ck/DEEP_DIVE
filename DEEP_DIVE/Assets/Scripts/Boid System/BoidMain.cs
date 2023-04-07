@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.UIElements;
 
 struct Boid3D
 {
@@ -12,10 +9,14 @@ struct Boid3D
     float pad0;
     float pad1;
 }
+struct Sphere
+{
+    public Vector3 position;
+    public float radius;
+}
 
 public class BoidMain : MonoBehaviour
 {
-
     const float blockSize = 256f;
 
     [Header("Boid Settings")]
@@ -28,10 +29,13 @@ public class BoidMain : MonoBehaviour
     [SerializeField] float spaceBounds = 5.0f;
     float xBound, yBound, zBound;
 
+    // Make below just grab the shaders directly
     [Header("Prefabs")]
     [SerializeField] ComputeShader boidComputeShader;
     [SerializeField] ComputeShader gridShader;
     [SerializeField] Material boidMaterial;
+
+    [Header("Mesh Settings")]
     [SerializeField] Mesh boidMesh;
 
     // Render Info
@@ -51,6 +55,9 @@ public class BoidMain : MonoBehaviour
     ComputeBuffer gridOffsetBufferIn;
     ComputeBuffer gridSumsBuffer;
     ComputeBuffer gridSumsBuffer2;
+    
+    ComputeBuffer turnDirectionsBuffer;
+    ComputeBuffer sphereCollidersBuffer;
 
     // Index is particle ID, x value is position flattened to 1D array, y value is grid cell offset
     int gridDimY, gridDimX, gridDimZ, gridTotalCells, blocks;
@@ -97,6 +104,30 @@ public class BoidMain : MonoBehaviour
         boidComputeShader.SetFloat("yBound", yBound);
         boidComputeShader.SetFloat("zBound", zBound);
 
+        // Setting up the Colliders inputs to compute shader
+        Vector3[] rayDirections = DirectionVectorGenerator.directions;
+        turnDirectionsBuffer = new ComputeBuffer(rayDirections.Length, 12);
+        turnDirectionsBuffer.SetData(rayDirections);
+        boidComputeShader.SetBuffer(updateBoidsKernel, "turnDirections", turnDirectionsBuffer);
+        boidComputeShader.SetInt("numTurnDirections", rayDirections.Length);
+        List<SphereCollider> spheres = FindSphereCollidersOnLayer(9);
+        List<Sphere> data = new();
+        for (int i = 0; i < spheres.Count; i++)
+        {
+            Sphere current = new()
+            {
+                position = spheres[i].transform.TransformPoint(spheres[i].center),
+                radius = spheres[i].radius
+            };
+            data.Add(current);
+        }
+        sphereCollidersBuffer = new ComputeBuffer(data.Count, 16);
+        sphereCollidersBuffer.SetData(data);
+        boidComputeShader.SetBuffer(updateBoidsKernel, "spheresBuffer", sphereCollidersBuffer);
+        boidComputeShader.SetInt("numSpheres", data.Count);
+        boidComputeShader.SetFloat("boidObstacleAvoidDist", settings.collisionAvoidDst);
+        boidComputeShader.SetFloat("avoidCollisionFactor", settings.avoidCollisionFactor);
+
         #endregion Setup boidComputeShader Inputs
 
         #region Generate Boids On GPU
@@ -115,9 +146,12 @@ public class BoidMain : MonoBehaviour
         rp.matProps = new MaterialPropertyBlock();
         rp.matProps.SetFloat("_Scale", boidScale);
         rp.matProps.SetBuffer("boids", boidBuffer);
-        rp.shadowCastingMode = ShadowCastingMode.On;
-        rp.receiveShadows = true;
+        rp.matProps.SetVector("_Offset", transform.position);
+        Debug.Log(rp.matProps.GetVector("_Offset"));
+        rp.shadowCastingMode = ShadowCastingMode.Off;
+        rp.receiveShadows = false;
         rp.worldBounds = new Bounds(Vector3.zero, Vector3.one * 1000);
+
         coneTriangles = new GraphicsBuffer(GraphicsBuffer.Target.Structured, boidMesh.triangles.Length, sizeof(int));
         coneTriangles.SetData(boidMesh.triangles);
         conePositions = new GraphicsBuffer(GraphicsBuffer.Target.Structured, boidMesh.vertices.Length, 3 * sizeof(float));
@@ -225,27 +259,6 @@ public class BoidMain : MonoBehaviour
         // Compute boid behaviours
         boidComputeShader.Dispatch(updateBoidsKernel, Mathf.CeilToInt(numBoids / blockSize), 1, 1);
 
-        #region Obstacle Avoidance
-
-        // Look into doing parallel collision detections with batching raycasts for better performance.
-        // Transformation from forward to direction to check is not 100% right
-        Boid3D[] boids = new Boid3D[numBoids];
-        boidBuffer.GetData(boids);
-        for (int i = 0; i < numBoids; i++)
-        {
-            // If there is an obstacle, get a direction to avoid the obstacle, then steer that way
-            if (IsHeadingForCollision(boids[i]))
-            {
-                boids[i].vel += (GetNotCollidingDirection(boids[i]).normalized * settings.maxSpeed - boids[i].vel) * settings.avoidCollisionFactor;
-                Vector3.ClampMagnitude(boids[i].vel, settings.maxSpeed);
-            }
-        }
-        boidBuffer.SetData(boids);
-
-        #endregion Obstacle Avoidance
-
-        // Other boid behaviors can go here
-
         // Render everything
         Graphics.RenderPrimitives(rp, MeshTopology.Triangles, numBoids * triangleCount);
     }
@@ -263,33 +276,56 @@ public class BoidMain : MonoBehaviour
         conePositions.Release();
         coneTriangles.Release();
         coneNormals.Release();
+
+        sphereCollidersBuffer.Release();
+        turnDirectionsBuffer.Release();
     }
 
-    #region Collision Functions
+    #region Finding Game Objects Functions
 
-    bool IsHeadingForCollision(Boid3D b)
+    List<SphereCollider> FindSphereCollidersOnLayer(int layer)
     {
-        return Physics.SphereCast(b.pos, settings.boundsRadius, b.vel, out _, settings.collisionAvoidDst, settings.obstacleMask);
-    }
-
-    Vector3 GetNotCollidingDirection(Boid3D b)
-    {
-        Vector3[] rayDirections = DirectionVectorGenerator.directions;
-
-        for (int i = 0; i < rayDirections.Length; i++)
+        List<SphereCollider> collidersList = new List<SphereCollider>();
+        List<GameObject> objs = FindGameObjectsWithLayer(layer);
+        foreach (GameObject obj in objs)
         {
-            // Alternate to original direction calculation method
-            // Based on this forum post: https://answers.unity.com/questions/356638/maths-behind-transformtransformdirection.html
-            Vector3 dir = Vector3.Scale(b.vel, rayDirections[i]).normalized * b.vel.magnitude;
-            Ray ray = new Ray(b.pos, dir);
-            if (!Physics.SphereCast(ray, settings.boundsRadius, settings.collisionAvoidDst, settings.obstacleMask))
+            SphereCollider[] colliders = obj.transform.GetComponents<SphereCollider>();
+            int length = colliders.Length;
+
+            if (length == 0) { continue; }
+            foreach (SphereCollider collider in colliders)
             {
-                return dir;
+                collidersList.Add(collider);
             }
         }
-        return b.vel;
+        return collidersList;
     }
 
-    #endregion Collision Functions
+    List<GameObject> FindGameObjectsWithLayer(int layer)  {
+        var goArray = FindObjectsOfType(typeof(GameObject)) as GameObject[];
+        var goList = new System.Collections.Generic.List<GameObject>();
+        for (var i = 0; i<goArray.Length; i++) {
+            if (goArray[i].layer == layer) {
+                goList.Add(goArray[i]);
+            }
+        }
+        if (goList.Count == 0)
+        {
+            return null;
+        }
+        return goList;
+    }
 
+    #endregion Finding Game Objects Functions
+
+    Vector3[] RotateVertices(Vector3[] vertices, Vector3 rotation, Vector3 center)
+    {
+        Quaternion rotationQuaternion = Quaternion.Euler(rotation);
+        var result = new Vector3[vertices.Length];
+        for (int i = 0; i < result.Length; i++)
+        {
+            result[i] = rotationQuaternion * (vertices[i] - center) + center;
+        }
+        return result;
+    } 
 }
