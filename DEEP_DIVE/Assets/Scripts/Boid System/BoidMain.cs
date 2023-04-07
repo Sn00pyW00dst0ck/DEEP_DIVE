@@ -1,10 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.UIElements;
 
 struct Boid3D
 {
@@ -21,7 +17,6 @@ struct Sphere
 
 public class BoidMain : MonoBehaviour
 {
-
     const float blockSize = 256f;
 
     [Header("Boid Settings")]
@@ -34,10 +29,13 @@ public class BoidMain : MonoBehaviour
     [SerializeField] float spaceBounds = 5.0f;
     float xBound, yBound, zBound;
 
+    // Make below just grab the shaders directly
     [Header("Prefabs")]
     [SerializeField] ComputeShader boidComputeShader;
     [SerializeField] ComputeShader gridShader;
     [SerializeField] Material boidMaterial;
+
+    [Header("Mesh Settings")]
     [SerializeField] Mesh boidMesh;
 
     // Render Info
@@ -154,6 +152,7 @@ public class BoidMain : MonoBehaviour
         rp.shadowCastingMode = ShadowCastingMode.Off;
         rp.receiveShadows = false;
         rp.worldBounds = new Bounds(Vector3.zero, Vector3.one * 1000);
+
         coneTriangles = new GraphicsBuffer(GraphicsBuffer.Target.Structured, boidMesh.triangles.Length, sizeof(int));
         coneTriangles.SetData(boidMesh.triangles);
         conePositions = new GraphicsBuffer(GraphicsBuffer.Target.Structured, boidMesh.vertices.Length, 3 * sizeof(float));
@@ -261,27 +260,6 @@ public class BoidMain : MonoBehaviour
         // Compute boid behaviours
         boidComputeShader.Dispatch(updateBoidsKernel, Mathf.CeilToInt(numBoids / blockSize), 1, 1);
 
-        #region Obstacle Avoidance
-        
-        // Look into doing parallel collision detections with batching raycasts for better performance.
-        // Transformation from forward to direction to check is not 100% right
-        // Boid3D[] boids = new Boid3D[numBoids];
-        // boidBuffer.GetData(boids);
-        // for (int i = 0; i < numBoids; i++)
-        // {
-        //     // If there is an obstacle, get a direction to avoid the obstacle, then steer that way
-        //     if (IsHeadingForCollision(boids[i]))
-        //     {
-        //         boids[i].vel += (GetNotCollidingDirection(boids[i]).normalized * settings.maxSpeed - boids[i].vel) * settings.avoidCollisionFactor;
-        //         Vector3.ClampMagnitude(boids[i].vel, settings.maxSpeed);
-        //     }
-        // }
-        // boidBuffer.SetData(boids);
-        
-        #endregion Obstacle Avoidance
-
-        // Other boid behaviors can go here
-
         // Render everything
         Graphics.RenderPrimitives(rp, MeshTopology.Triangles, numBoids * triangleCount);
     }
@@ -303,34 +281,6 @@ public class BoidMain : MonoBehaviour
         sphereCollidersBuffer.Release();
         turnDirectionsBuffer.Release();
     }
-
-    #region Collision Functions
-
-    bool IsHeadingForCollision(Boid3D b)
-    {
-        return Physics.SphereCast(b.pos, settings.boundsRadius, b.vel, out _, settings.collisionAvoidDst, settings.obstacleMask);
-    }
-
-    Vector3 GetNotCollidingDirection(Boid3D b)
-    {
-        Vector3[] rayDirections = DirectionVectorGenerator.directions;
-
-        for (int i = 0; i < rayDirections.Length; i++)
-        {
-            // Alternate to original direction calculation method
-            // Based on this forum post: https://answers.unity.com/questions/356638/maths-behind-transformtransformdirection.html
-            Vector3 dir = Vector3.Scale(b.vel, rayDirections[i]).normalized * b.vel.magnitude;
-            Ray ray = new Ray(b.pos, dir);
-            if (!Physics.SphereCast(ray, settings.boundsRadius, settings.collisionAvoidDst, settings.obstacleMask))
-            {
-                return dir;
-            }
-        }
-        return b.vel;
-    }
-
-    #endregion Collision Functions
-
 
     #region Finding Game Objects Functions
 
@@ -368,4 +318,15 @@ public class BoidMain : MonoBehaviour
     }
 
     #endregion Finding Game Objects Functions
+
+    Vector3[] RotateVertices(Vector3[] vertices, Vector3 rotation, Vector3 center)
+    {
+        Quaternion rotationQuaternion = Quaternion.Euler(rotation);
+        var result = new Vector3[vertices.Length];
+        for (int i = 0; i < result.Length; i++)
+        {
+            result[i] = rotationQuaternion * (vertices[i] - center) + center;
+        }
+        return result;
+    } 
 }

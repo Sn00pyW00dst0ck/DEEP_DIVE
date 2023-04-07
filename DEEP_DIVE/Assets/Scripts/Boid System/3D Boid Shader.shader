@@ -44,14 +44,6 @@ Shader "Custom/3DBoidShader" {
             int triangleCount;
         #endif
 
-        // Below based on some old math I did for project 1, only done in a shader now
-        void rotate3D(inout float3 v, float3 vel) {
-            float3 up = float3(0, 1, 0);
-            float3 axis = normalize(cross(up, vel));
-            float angle = acos(dot(up, normalize(vel)));
-            v = v * cos(angle) + cross(axis, v) * sin(angle) + axis * dot(axis, v) * (1. - cos(angle));
-        }
-
         void vert(inout appdata v) {
             //https://docs.unity3d.com/Manual/SL-BuiltinMacros.html
             #if defined(SHADER_API_D3D11) || defined(SHADER_API_METAL)
@@ -60,10 +52,18 @@ Shader "Custom/3DBoidShader" {
                 Boid boid = boids[instanceID];
                 float3 pos = conePositions[coneTriangles[instanceVertexID]];
                 float3 normal = coneNormals[coneTriangles[instanceVertexID]];
-                rotate3D(pos, boid.vel);
-                v.vertex = float4((pos * _Scale) + boid.pos, 1);
-                rotate3D(normal, boid.vel);
-                v.normal = normal;
+
+                // Below for rotations to keep up direcion locked for the rotation
+                // Based on post from bgolus at: https://forum.unity.com/threads/rotate-mesh-inside-shader.1109660/
+                float3 forward = normalize(boid.vel);
+                float3 right = normalize(cross(forward, float3(0, 1, 0)));
+                float3 up = cross(right, forward); // does not need to be normalized
+                float3x3 rotationMatrix = float3x3(right, up, forward);
+
+                float3 worldPosition = mul(pos, rotationMatrix) * _Scale + boid.pos;
+                v.vertex = float4(worldPosition, 1);
+
+                // We don't need the normal
             #endif
         }
 
