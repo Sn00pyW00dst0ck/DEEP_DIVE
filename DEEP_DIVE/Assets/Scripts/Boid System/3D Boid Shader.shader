@@ -6,6 +6,8 @@ Shader "Custom/3DBoidShader" {
       _Scale("Scale", Float) = 1.0
       _Glossiness("Smoothness", Range(0, 1)) = 0.5
       _Metallic("Metallic", Range(0, 1)) = 0.0
+
+      _Offset("Offset", Vector) = (0, 0, 0, 0)
     }
     SubShader{
         Tags { "RenderType" = "Opaque" }
@@ -36,6 +38,7 @@ Shader "Custom/3DBoidShader" {
         };
 
         float _Scale;
+        float4 _Offset;
         #if defined(SHADER_API_D3D11) || defined(SHADER_API_METAL)
             StructuredBuffer<float3> conePositions;
             StructuredBuffer<float3> coneNormals;
@@ -60,7 +63,7 @@ Shader "Custom/3DBoidShader" {
                 float3 up = cross(right, forward); // does not need to be normalized
                 float3x3 rotationMatrix = float3x3(right, up, forward);
 
-                float3 worldPosition = mul(pos, rotationMatrix) * _Scale + boid.pos;
+                float3 worldPosition = mul(pos, rotationMatrix) * _Scale + boid.pos + _Offset;
                 v.vertex = float4(worldPosition, 1);
 
                 // We don't need the normal

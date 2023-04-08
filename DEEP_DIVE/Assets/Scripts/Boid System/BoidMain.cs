@@ -120,9 +120,6 @@ public class BoidMain : MonoBehaviour
                 radius = spheres[i].radius
             };
             data.Add(current);
-            Debug.Log(data[i]);
-            Debug.Log(data[i].position);
-            Debug.Log(data[i].radius);
         }
         sphereCollidersBuffer = new ComputeBuffer(data.Count, 16);
         sphereCollidersBuffer.SetData(data);
@@ -149,6 +146,8 @@ public class BoidMain : MonoBehaviour
         rp.matProps = new MaterialPropertyBlock();
         rp.matProps.SetFloat("_Scale", boidScale);
         rp.matProps.SetBuffer("boids", boidBuffer);
+        rp.matProps.SetVector("_Offset", transform.position);
+        Debug.Log(rp.matProps.GetVector("_Offset"));
         rp.shadowCastingMode = ShadowCastingMode.Off;
         rp.receiveShadows = false;
         rp.worldBounds = new Bounds(Vector3.zero, Vector3.one * 1000);
