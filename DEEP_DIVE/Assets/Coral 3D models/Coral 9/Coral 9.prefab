@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2465022706961647126}
   - component: {fileID: 3934832847827862685}
   - component: {fileID: 3441507256052812613}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1648354727918496900}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sketchfab_model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 644021241542100650}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Coral 9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 9150426538703893585}
   - component: {fileID: 334331935318764017}
   - component: {fileID: 2997489467667280788}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +239,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7071059599809162545}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 20170721_Iriomote_Unarizaki_4m_Pverrucosa_dive.obj.cleaner.materialmerger.gles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +278,7 @@ GameObject:
   - component: {fileID: 7404403104539463016}
   - component: {fileID: 4047892554217220818}
   - component: {fileID: 4355372050815667622}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 563183965549241553}
   - component: {fileID: 7785675987448220061}
   - component: {fileID: 8166377631740103527}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -444,7 +444,7 @@ GameObject:
   - component: {fileID: 4598815584717316230}
   - component: {fileID: 906885639883162300}
   - component: {fileID: 7849613579246104573}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -527,7 +527,7 @@ GameObject:
   - component: {fileID: 7749419739211688230}
   - component: {fileID: 6116314772387050651}
   - component: {fileID: 1035838401431049402}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}

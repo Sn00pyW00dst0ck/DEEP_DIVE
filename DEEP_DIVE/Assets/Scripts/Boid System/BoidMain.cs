@@ -287,6 +287,7 @@ public class BoidMain : MonoBehaviour
     {
         List<SphereCollider> collidersList = new List<SphereCollider>();
         List<GameObject> objs = FindGameObjectsWithLayer(layer);
+        if (objs == null) { return collidersList; }
         foreach (GameObject obj in objs)
         {
             SphereCollider[] colliders = obj.transform.GetComponents<SphereCollider>();

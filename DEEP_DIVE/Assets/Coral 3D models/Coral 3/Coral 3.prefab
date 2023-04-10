@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5801558319276116894}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sketchfab_model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 2767570972754272070}
   - component: {fileID: 5351426629159226309}
   - component: {fileID: 7894274167186137887}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2087953029424208465}
   - component: {fileID: 5438232650535828162}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Coral 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 198926549512132320}
   - component: {fileID: 7208341249725348502}
   - component: {fileID: 5668955087433565246}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7720799149862226346}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: mesh-90.obj.cleaner.materialmerger.gles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,7 +292,7 @@ GameObject:
   - component: {fileID: 3024174796140936207}
   - component: {fileID: 4534407723900192541}
   - component: {fileID: 1764760643629739120}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -375,7 +375,7 @@ GameObject:
   - component: {fileID: 8404650771500786403}
   - component: {fileID: 66014090855198806}
   - component: {fileID: 3305502406350957774}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -458,7 +458,7 @@ GameObject:
   - component: {fileID: 7239908311987229701}
   - component: {fileID: 6971938394261545970}
   - component: {fileID: 8617710296317245073}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -541,7 +541,7 @@ GameObject:
   - component: {fileID: 6526550293412267080}
   - component: {fileID: 8523372050011715387}
   - component: {fileID: 5519297968700185757}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

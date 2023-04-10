@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3094068112719597387}
   - component: {fileID: 3022443639779489588}
   - component: {fileID: 2800557588994588237}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2255486145042291967}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Coral_4_SL_100pics-exported.obj.cleaner.materialmerger.gles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 7233847505065917101}
   - component: {fileID: 7218170551357564915}
   - component: {fileID: 219652922521323061}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1187906619993941257}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sketchfab_model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 1990343605908983966}
   - component: {fileID: 3171530840827044317}
   - component: {fileID: 7690712973780673370}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3498232743357504764}
   - component: {fileID: 4290364084734243902}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Coral 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3921382911287228635}
   - component: {fileID: 6830640509810270618}
   - component: {fileID: 2144900626177154434}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5423763723310731122}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 20170715_Iriomote_Unarizaki_1m_Arobusta_freedive-1.obj.cleaner.materialmerger.gles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8046270942369717223}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sketchfab_model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 104760036435317331}
   - component: {fileID: 3190787045261582247}
   - component: {fileID: 2494344365125246518}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +241,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4715613317209975659}
   - component: {fileID: 960050563317673420}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Coral 10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
