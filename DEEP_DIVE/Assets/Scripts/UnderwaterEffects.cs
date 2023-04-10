@@ -10,15 +10,16 @@ public class UnderwaterEffects : MonoBehaviour
     GameObject underwaterEffects;
 
     [SerializeField]
-    GameObject[] underwaterTerrains;
+    Terrain[] underwaterTerrains;
 
     private void OnTriggerEnter(Collider other)
     {
         RenderSettings.fog = true;
         underwaterEffects.SetActive(true);
-        foreach (GameObject obj in underwaterTerrains)
+        // Turn on all the underwater trees
+        foreach (Terrain obj in underwaterTerrains)
         {
-            obj.SetActive(true);
+            obj.drawTreesAndFoliage = true;
         }
     }
 
@@ -26,9 +27,10 @@ public class UnderwaterEffects : MonoBehaviour
     {
         RenderSettings.fog = false;
         underwaterEffects.SetActive(false);
-        foreach (GameObject obj in underwaterTerrains)
+        // Turn off all the underwater trees
+        foreach (Terrain obj in underwaterTerrains)
         {
-            obj.SetActive(false);
+            obj.drawTreesAndFoliage = false;
         }
     }
 }
