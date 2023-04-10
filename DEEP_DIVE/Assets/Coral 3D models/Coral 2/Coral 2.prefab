@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8075846704745446118}
   - component: {fileID: 3670460737432603585}
   - component: {fileID: 7571814752078012904}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6682464501137146956}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sketchfab_model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 4626540345669815368}
   - component: {fileID: 6457383535703925726}
   - component: {fileID: 1651435162275026654}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1231005550396842950}
   - component: {fileID: 7406801992744222844}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Coral 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 3815513677061678241}
   - component: {fileID: 3485543914748721800}
   - component: {fileID: 623752568397970687}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 8528133980525463873}
   - component: {fileID: 4517804539374739273}
   - component: {fileID: 7551733368806820773}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -421,7 +421,7 @@ GameObject:
   - component: {fileID: 2374462538225749902}
   - component: {fileID: 2722495454370887765}
   - component: {fileID: 4783348100262903164}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -504,7 +504,7 @@ GameObject:
   - component: {fileID: 8342814447927497161}
   - component: {fileID: 3319554354036467834}
   - component: {fileID: 3095334707840070474}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -587,7 +587,7 @@ GameObject:
   - component: {fileID: 2015182176424790356}
   - component: {fileID: 6382769863285212674}
   - component: {fileID: 3536815277220774046}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -668,7 +668,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9193614252894224046}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 11-exported.obj.cleaner
   m_TagString: Untagged
   m_Icon: {fileID: 0}

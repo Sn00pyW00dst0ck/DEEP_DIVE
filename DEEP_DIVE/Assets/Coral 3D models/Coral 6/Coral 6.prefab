@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 615191851962778276}
   - component: {fileID: 5559331129019285124}
   - component: {fileID: 5293755728885721249}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 5922494846089094139}
   - component: {fileID: 6396494184292871345}
   - component: {fileID: 6604569945928184554}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 458909721837934768}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 20170715_Iriomote_Unarizaki_3m_Agemm_freedive.obj.cleaner.materialmerger.gles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 6111133557974090662}
   - component: {fileID: 1679894006906225447}
   - component: {fileID: 5281508148095044561}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,7 +295,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4068381424179108468}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sketchfab_model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3777716851940883352}
   - component: {fileID: 8918621513340562447}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Coral 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -375,7 +375,7 @@ GameObject:
   - component: {fileID: 1091321678612311853}
   - component: {fileID: 807278474472649166}
   - component: {fileID: 8645666473642323404}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -458,7 +458,7 @@ GameObject:
   - component: {fileID: 9071989383028834675}
   - component: {fileID: 4453826325820212956}
   - component: {fileID: 7319617907769607020}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -541,7 +541,7 @@ GameObject:
   - component: {fileID: 1843209919284830548}
   - component: {fileID: 1560372027313258592}
   - component: {fileID: 5761628070901406431}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
