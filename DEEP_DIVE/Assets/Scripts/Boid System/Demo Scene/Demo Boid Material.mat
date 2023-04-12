@@ -34,9 +34,19 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AmplitudeX: 0
+    - _AmplitudeY: 0
+    - _AmplitudeZ: 0.4
+    - _FrequencyX: 0
+    - _FrequencyY: 0
+    - _FrequencyZ: 2.5
     - _Glossiness: 0.5
+    - _HeadLimit: 0.05
     - _Metallic: 0
     - _Scale: 1
+    - _SpeedX: 0
+    - _SpeedY: 0
+    - _SpeedZ: 5
     m_Colors:
     - _Color: {r: 0.27843136, g: 0.8862745, b: 0.38678482, a: 1}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}

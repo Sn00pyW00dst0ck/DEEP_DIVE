@@ -2,15 +2,28 @@
 // Shadows are slowing the GPU down A LOT
 Shader "Custom/3DBoidShader" {
     Properties{
-      _Color("Color", Color) = (1, 1, 1, 1)
-      _Scale("Scale", Float) = 1.0
-      _Glossiness("Smoothness", Range(0, 1)) = 0.5
-      _Metallic("Metallic", Range(0, 1)) = 0.0
+        _Color("Color", Color) = (1, 1, 1, 1)
+        _Scale("Scale", Float) = 1.0
+        _Glossiness("Smoothness", Range(0, 1)) = 0.5
+        _Metallic("Metallic", Range(0, 1)) = 0.0
+        
+        _Offset("Offset", Vector) = (0, 0, 0, 0)
+        
+        _MainTex("Texture", 2D) = "white" {}
+        _Detail("Detail", 2D) = "gray" {}
 
-      _Offset("Offset", Vector) = (0, 0, 0, 0)
 
-      _MainTex("Texture", 2D) = "white" {}
-      _Detail("Detail", 2D) = "gray" {}
+        _SpeedX("SpeedX", Range(0, 10)) = 1
+        _FrequencyX("FrequencyX", Range(0, 10)) = 1
+        _AmplitudeX("AmplitudeX", Range(0, 0.2)) = 1
+        _SpeedY("SpeedY", Range(0, 10)) = 1
+        _FrequencyY("FrequencyY", Range(0, 10)) = 1
+        _AmplitudeY("AmplitudeY", Range(0, 0.2)) = 1
+        _SpeedZ("SpeedZ", Range(0, 10)) = 1
+        _FrequencyZ("FrequencyZ", Range(0, 10)) = 1
+        _AmplitudeZ("AmplitudeZ", Range(0,  2)) = 1
+        _HeadLimit("HeadLimit", Range(-2,  2)) = 0.05
+
     }
         SubShader{
             Tags { "RenderType" = "Opaque" }
@@ -43,6 +56,48 @@ Shader "Custom/3DBoidShader" {
                 float pad1;
             };
 
+            // Inspiration for fish shader animation effect
+            // https://www.reddit.com/r/Unity3D/comments/7bvx9d/made_a_vertex_animation_shader_for_a_fish/
+            //
+            // X AXIS
+            float _SpeedX;
+            float _FrequencyX;
+            float _AmplitudeX;
+
+            // Y AXIS
+            float _SpeedY;
+            float _FrequencyY;
+            float _AmplitudeY;
+
+            // Z AXIS
+            float _SpeedZ;
+            float _FrequencyZ;
+            float _AmplitudeZ;
+
+            // Head Limit (Head wont shake so much)
+            float _HeadLimit;
+
+            float3 applyFishAnimation(float3 position) {
+                //Z AXIS
+                position.z += sin((position.z + _Time.y * _SpeedX) * _FrequencyX) * _AmplitudeX;
+
+                //Y AXIS
+                position.y += sin((position.z + _Time.y * _SpeedY) * _FrequencyY) * _AmplitudeY;
+
+                //X AXIS
+                if (position.z > _HeadLimit)
+                {
+                    position.x += sin((0.05 + _Time.y * _SpeedZ) * _FrequencyZ) * _AmplitudeZ * _HeadLimit;
+                }
+                else
+                {
+                    position.x += sin((position.z + _Time.y * _SpeedZ) * _FrequencyZ) * _AmplitudeZ * position.z;
+                }
+                return position;
+            }
+
+
+
             // Buffers of input
             #if defined(SHADER_API_D3D11) || defined(SHADER_API_METAL)
                 StructuredBuffer<float3> conePositions;
@@ -72,7 +127,7 @@ Shader "Custom/3DBoidShader" {
                     float3x3 rotationMatrix = float3x3(right, up, forward);
 
                     // Calculate new vertex position
-                    float3 worldPosition = mul(pos, rotationMatrix) * _Scale + boid.pos + _Offset;
+                    float3 worldPosition = mul(applyFishAnimation(pos), rotationMatrix) * _Scale + boid.pos + _Offset;
                     v.vertex = float4(worldPosition, 1);
 
                     // We need the normal
