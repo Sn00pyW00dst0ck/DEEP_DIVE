@@ -66,7 +66,11 @@ Shader "Custom/3DBoidShader" {
                     float3 worldPosition = mul(pos, rotationMatrix) * _Scale + boid.pos + _Offset;
                     v.vertex = float4(worldPosition, 1);
 
-                    // We don't need the normal
+                    // We need the normal
+                    v.normal = float4(mul(normal, rotationMatrix), 1);
+
+                    
+
                 #endif
             }
 
