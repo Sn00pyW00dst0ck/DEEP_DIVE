@@ -12,6 +12,8 @@ public class UnderwaterEffects : MonoBehaviour
     [SerializeField]
     Terrain[] underwaterTerrains;
 
+    [SerializeField]
+    GameObject healthBar;
     private void OnTriggerEnter(Collider other)
     {
         RenderSettings.fog = true;
@@ -21,6 +23,7 @@ public class UnderwaterEffects : MonoBehaviour
         {
             obj.drawTreesAndFoliage = true;
         }
+        healthBar.SetActive(true);
     }
 
     private void OnTriggerExit(Collider other)
@@ -32,5 +35,6 @@ public class UnderwaterEffects : MonoBehaviour
         {
             obj.drawTreesAndFoliage = false;
         }
+        healthBar.SetActive(false);
     }
 }
