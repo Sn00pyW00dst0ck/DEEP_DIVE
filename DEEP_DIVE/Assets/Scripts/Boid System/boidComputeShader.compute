@@ -185,25 +185,25 @@ void LimitSpeed(inout Boid boid) {
 }
 
 void KeepInBounds(inout Boid boid) {
-    if (boid.pos.x < -xBound) {
-        boid.vel.x += deltaTime * 2 * turnSpeed;
+    if (boid.pos.x > xBound) {
+        boid.vel.x -= deltaTime * turnSpeed * 2;
     }
-    else if (boid.pos.x > xBound) {
-        boid.vel.x -= deltaTime * 2 * turnSpeed;
+    else if (boid.pos.x < -xBound) {
+        boid.vel.x += deltaTime * turnSpeed * 2;
     }
 
     if (boid.pos.y > yBound) {
-        boid.vel.y -= deltaTime * 2 * turnSpeed;
+        boid.vel.y -= deltaTime * turnSpeed * 2;
     }
     else if (boid.pos.y < -yBound) {
-        boid.vel.y += deltaTime * 2 * turnSpeed;
+        boid.vel.y += deltaTime * turnSpeed * 2;
     }
 
     if (boid.pos.z > zBound) {
-        boid.vel.z -= deltaTime * 2 * turnSpeed;
+        boid.vel.z -= deltaTime * turnSpeed * 2;
     }
     else if (boid.pos.z < -zBound) {
-        boid.vel.z += deltaTime * 2 * turnSpeed;
+        boid.vel.z += deltaTime * turnSpeed * 2;
     }
 }
 

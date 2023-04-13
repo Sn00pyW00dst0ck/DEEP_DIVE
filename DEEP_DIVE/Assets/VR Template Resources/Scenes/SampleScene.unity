@@ -2446,7 +2446,7 @@ MonoBehaviour:
   boidScale: 3
   settings: {fileID: 11400000, guid: 788edd8ab4a12c146a47d44e92b32757, type: 2}
   edgeMargin: 0.5
-  spaceBounds: 70
+  spaceBounds: 75
   boidComputeShader: {fileID: 7200000, guid: 41fb68aebe52bbd47a71c90027ae848f, type: 3}
   gridShader: {fileID: 7200000, guid: a4a60226fd61b784a8c947709a40402f, type: 3}
   boidMaterial: {fileID: 2100000, guid: 9bbef1799fa1d534e9a24e8bb7177e80, type: 2}
