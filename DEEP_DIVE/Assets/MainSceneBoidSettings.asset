@@ -16,9 +16,9 @@ MonoBehaviour:
   minSpeed: 17
   turnSpeed: 30
   visualRange: 3
-  minDistance: 1.4
-  cohesionFactor: 42
-  separationFactor: 30
+  minDistance: 2
+  cohesionFactor: 27
+  separationFactor: 35
   alignmentFactor: 17
   boundsRadius: 1.5
   collisionAvoidDst: 50
