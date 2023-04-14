@@ -100,9 +100,9 @@ Shader "Custom/3DBoidShader" {
 
             // Buffers of input
             #if defined(SHADER_API_D3D11) || defined(SHADER_API_METAL)
-                StructuredBuffer<float3> conePositions;
-                StructuredBuffer<float3> coneNormals;
-                StructuredBuffer<int> coneTriangles;
+                StructuredBuffer<float3> meshPositions;
+                StructuredBuffer<float3> meshNormals;
+                StructuredBuffer<int> meshTriangles;
                 StructuredBuffer<Boid> boids;
                 int triangleCount;
             #endif
@@ -116,8 +116,8 @@ Shader "Custom/3DBoidShader" {
                     uint instanceID = v.vertexID / triangleCount;
                     uint instanceVertexID = v.vertexID - instanceID * triangleCount;
                     Boid boid = boids[instanceID];
-                    float3 pos = conePositions[coneTriangles[instanceVertexID]];
-                    float3 normal = coneNormals[coneTriangles[instanceVertexID]];
+                    float3 pos = meshPositions[meshTriangles[instanceVertexID]];
+                    float3 normal = meshNormals[meshTriangles[instanceVertexID]];
 
                     // Below for rotations to keep up direcion locked for the rotation
                     // Based on post from bgolus at: https://forum.unity.com/threads/rotate-mesh-inside-shader.1109660/
