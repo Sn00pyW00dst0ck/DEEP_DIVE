@@ -40,7 +40,7 @@ public class BoidMain : MonoBehaviour
 
     // Render Info
     RenderParams rp;
-    GraphicsBuffer coneTriangles, conePositions, coneNormals;
+    GraphicsBuffer meshTriangles, meshPositions, meshNormals;
     int triangleCount; // constant for the cone boid settings
 
     // Kernel IDs
@@ -116,7 +116,7 @@ public class BoidMain : MonoBehaviour
         {
             Sphere current = new()
             {
-                position = spheres[i].transform.TransformPoint(spheres[i].center),
+                position = spheres[i].transform.TransformPoint(spheres[i].center) - transform.position,
                 radius = spheres[i].radius
             };
             data.Add(current);
@@ -152,15 +152,15 @@ public class BoidMain : MonoBehaviour
         rp.receiveShadows = false;
         rp.worldBounds = new Bounds(Vector3.zero, Vector3.one * 1000);
 
-        coneTriangles = new GraphicsBuffer(GraphicsBuffer.Target.Structured, boidMesh.triangles.Length, sizeof(int));
-        coneTriangles.SetData(boidMesh.triangles);
-        conePositions = new GraphicsBuffer(GraphicsBuffer.Target.Structured, boidMesh.vertices.Length, 3 * sizeof(float));
-        conePositions.SetData(boidMesh.vertices);
-        coneNormals = new GraphicsBuffer(GraphicsBuffer.Target.Structured, boidMesh.normals.Length, 3 * sizeof(float));
-        coneNormals.SetData(boidMesh.normals);
-        rp.matProps.SetBuffer("coneTriangles", coneTriangles);
-        rp.matProps.SetBuffer("conePositions", conePositions);
-        rp.matProps.SetBuffer("coneNormals", coneNormals);
+        meshTriangles = new GraphicsBuffer(GraphicsBuffer.Target.Structured, boidMesh.triangles.Length, sizeof(int));
+        meshTriangles.SetData(boidMesh.triangles);
+        meshPositions = new GraphicsBuffer(GraphicsBuffer.Target.Structured, boidMesh.vertices.Length, 3 * sizeof(float));
+        meshPositions.SetData(boidMesh.vertices);
+        meshNormals = new GraphicsBuffer(GraphicsBuffer.Target.Structured, boidMesh.normals.Length, 3 * sizeof(float));
+        meshNormals.SetData(boidMesh.normals);
+        rp.matProps.SetBuffer("meshTriangles", meshTriangles);
+        rp.matProps.SetBuffer("meshPositions", meshPositions);
+        rp.matProps.SetBuffer("meshNormals", meshNormals);
         rp.matProps.SetInteger("triangleCount", triangleCount);
 
         #endregion Rendering Shader Setup Code
@@ -273,9 +273,9 @@ public class BoidMain : MonoBehaviour
         gridOffsetBufferIn.Release();
         gridSumsBuffer.Release();
         gridSumsBuffer2.Release();
-        conePositions.Release();
-        coneTriangles.Release();
-        coneNormals.Release();
+        meshPositions.Release();
+        meshTriangles.Release();
+        meshNormals.Release();
 
         sphereCollidersBuffer.Release();
         turnDirectionsBuffer.Release();
