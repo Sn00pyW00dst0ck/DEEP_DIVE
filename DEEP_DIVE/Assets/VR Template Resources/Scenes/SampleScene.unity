@@ -5859,10 +5859,10 @@ WindZone:
   m_Enabled: 1
   m_Mode: 0
   m_Radius: 20
-  m_WindMain: 7
-  m_WindTurbulence: 3
-  m_WindPulseMagnitude: 3
-  m_WindPulseFrequency: 0.9
+  m_WindMain: 1
+  m_WindTurbulence: 1
+  m_WindPulseMagnitude: 2
+  m_WindPulseFrequency: 1
 --- !u!4 &1449221931
 Transform:
   m_ObjectHideFlags: 0
