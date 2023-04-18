@@ -12,9 +12,14 @@ public class UnderwaterEffects : MonoBehaviour
     [SerializeField]
     Terrain[] underwaterTerrains;
 
+    [SerializeField]
+    GameObject underwaterAssets;
 
     [SerializeField]
     Terrain[] aboveWaterTerrains;
+
+    [SerializeField]
+    GameObject aboveWaterAssets;
 
     [SerializeField]
     GameObject healthBar;
@@ -34,6 +39,8 @@ public class UnderwaterEffects : MonoBehaviour
             obj.drawTreesAndFoliage = false;
         }
         healthBar.SetActive(true);
+        underwaterAssets.SetActive(true);
+        aboveWaterAssets.SetActive(false);
     }
 
     private void OnTriggerExit(Collider other)
@@ -48,8 +55,10 @@ public class UnderwaterEffects : MonoBehaviour
         // Turn on all the above ground terrains
         foreach (Terrain obj in aboveWaterTerrains)
         {
-            obj.drawTreesAndFoliage = false;
+            obj.drawTreesAndFoliage = true;
         }
         healthBar.SetActive(false);
+        underwaterAssets.SetActive(false);
+        aboveWaterAssets.SetActive(true);
     }
 }
