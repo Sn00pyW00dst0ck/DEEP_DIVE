@@ -10,46 +10,40 @@ public class UnderwaterEffects : MonoBehaviour
     GameObject underwaterEffects;
 
     [SerializeField]
+    ToggleLocomotion toggler;
+
+    [SerializeField]
     Terrain[] underwaterTerrains;
-
-
-    [SerializeField]
-    Terrain[] aboveWaterTerrains;
-
-    [SerializeField]
-    GameObject healthBar;
 
     private void OnTriggerEnter(Collider other)
     {
-        RenderSettings.fog = true;
-        underwaterEffects.SetActive(true);
-        // Turn on all the underwater trees
-        foreach (Terrain obj in underwaterTerrains)
+        if(other.tag == "MainCamera")
         {
-            obj.drawTreesAndFoliage = true;
+            RenderSettings.fog = true;
+            underwaterEffects.SetActive(true);
+            toggler.EnterWater();
+            // Turn on all the underwater trees
+            foreach (Terrain obj in underwaterTerrains)
+            {
+                obj.drawTreesAndFoliage = true;
+            }
         }
-        // Turn off all the above ground terrains
-        foreach (Terrain obj in aboveWaterTerrains)
-        {
-            obj.drawTreesAndFoliage = false;
-        }
-        healthBar.SetActive(true);
+        
     }
 
     private void OnTriggerExit(Collider other)
     {
-        RenderSettings.fog = false;
-        underwaterEffects.SetActive(false);
-        // Turn off all the underwater trees
-        foreach (Terrain obj in underwaterTerrains)
+        if(other.tag == "MainCamera")
         {
-            obj.drawTreesAndFoliage = false;
+            RenderSettings.fog = false;
+            underwaterEffects.SetActive(false);
+            toggler.EnterLand();
+            // Turn off all the underwater trees
+            foreach (Terrain obj in underwaterTerrains)
+            {
+                obj.drawTreesAndFoliage = false;
+            }
         }
-        // Turn on all the above ground terrains
-        foreach (Terrain obj in aboveWaterTerrains)
-        {
-            obj.drawTreesAndFoliage = false;
-        }
-        healthBar.SetActive(false);
+        
     }
 }
