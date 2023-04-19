@@ -7,7 +7,7 @@ public class UnderwaterEffects : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
-    GameObject underwaterEffects;
+    GameObject[] underwaterEffects;
 
     [SerializeField]
     ToggleLocomotion toggler;
@@ -20,7 +20,12 @@ public class UnderwaterEffects : MonoBehaviour
         if(other.tag == "MainCamera")
         {
             RenderSettings.fog = true;
-            underwaterEffects.SetActive(true);
+
+            foreach (GameObject obj in underwaterEffects)
+            {
+                obj.SetActive(true);
+            }
+
             toggler.EnterWater();
             // Turn on all the underwater trees
             foreach (Terrain obj in underwaterTerrains)
@@ -36,7 +41,10 @@ public class UnderwaterEffects : MonoBehaviour
         if(other.tag == "MainCamera")
         {
             RenderSettings.fog = false;
-            underwaterEffects.SetActive(false);
+            foreach (GameObject obj in underwaterEffects)
+            {
+                obj.SetActive(false);
+            }
             toggler.EnterLand();
             // Turn off all the underwater trees
             foreach (Terrain obj in underwaterTerrains)
