@@ -606,8 +606,8 @@ GameObject:
   - component: {fileID: 8652441832824992105}
   - component: {fileID: 7618090629142013772}
   - component: {fileID: 9077983566988941083}
-  - component: {fileID: 6164157991025862514}
-  - component: {fileID: 317959043814739145}
+  - component: {fileID: 7160329886299930792}
+  - component: {fileID: 687246516044470378}
   m_Layer: 0
   m_Name: 6437336c0954d0f33f890a59
   m_TagString: Untagged
@@ -676,7 +676,7 @@ MonoBehaviour:
   AvatarMetadata:
     BodyType: 1
     OutfitGender: 1
---- !u!114 &6164157991025862514
+--- !u!114 &7160329886299930792
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -690,7 +690,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blinkDuration: 0.1
   blinkInterval: 3
---- !u!114 &317959043814739145
+--- !u!114 &687246516044470378
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

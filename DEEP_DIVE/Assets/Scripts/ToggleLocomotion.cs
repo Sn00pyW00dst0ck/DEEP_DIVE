@@ -7,6 +7,7 @@ public class ToggleLocomotion : MonoBehaviour
 {
     public ContinuousMoveProviderBase walker;
     public ContinuousMoveProviderBase swimmer;
+    public Rigidbody myRigid;
 
     private bool swim = false;
 
@@ -22,12 +23,14 @@ public class ToggleLocomotion : MonoBehaviour
         if(swim == false)
         {
             swim = true;
+            myRigid.useGravity = true;
             walker.enabled = false;
             swimmer.enabled = true;
         }
         else
         {
             swim = false;
+            myRigid.useGravity = false;
             walker.enabled = true;
             swimmer.enabled = false;
         }
@@ -35,7 +38,9 @@ public class ToggleLocomotion : MonoBehaviour
 
     public void EnterWater()
     {
+        Debug.Log("switched");
         swim = true;
+        myRigid.useGravity = false;
         walker.enabled = false;
         swimmer.enabled = true;
     }
@@ -43,6 +48,7 @@ public class ToggleLocomotion : MonoBehaviour
     public void EnterLand()
     {
         swim = false;
+        myRigid.useGravity = true;
         walker.enabled = true;
         swimmer.enabled = false;
     }
