@@ -3,19 +3,18 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Post Processing Volume
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Player
+  - 
   - Water
   - UI
-  - Post Processing
-  - Boid Layer
-  - Large Boid Layer
-  - Corals
+  - Ignore
+  - 
+  - 
+  - 
   - 
   - 
   - 
