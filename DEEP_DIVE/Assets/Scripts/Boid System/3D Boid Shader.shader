@@ -120,6 +120,7 @@ Shader "Custom/3DBoidShader" {
                         Boid boid = boids[instanceID];
                         float3 pos = meshPositions[meshTriangles[instanceVertexID]];
                         float3 normal = meshNormals[meshTriangles[instanceVertexID]];
+                        float2 texcoord = meshUVs[meshTriangles[instanceVertexID]].xy;
 
                         // Below for rotations to keep up direcion locked for the rotation
                         // Based on post from bgolus at: https://forum.unity.com/threads/rotate-mesh-inside-shader.1109660/
@@ -134,8 +135,9 @@ Shader "Custom/3DBoidShader" {
 
                         // We need the normal
                         v.normal = float4(mul(normal, rotationMatrix), 1);
-                        v.texcoord.xy = meshUVs[meshTriangles[instanceVertexID]].xy;
-                        //o.uv_Detail = meshUVs[meshTriangles[instanceVertexID]];
+                        v.texcoord.xy = texcoord;
+                        v.texcoord1.xy = texcoord;
+                        v.texcoord2.xy = texcoord;
   
                     #endif
                 }
@@ -145,13 +147,15 @@ Shader "Custom/3DBoidShader" {
                 half _Glossiness;
                 half _Metallic;
                 sampler2D _MainTex;
+                sampler2D _BumpMap;
                 sampler2D _Detail;
                 void surf(Input IN, inout SurfaceOutputStandard o) {
                     // Set color based on textures (TODO: add bumpmap).
                     o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
-                    // o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_MainTex));
                     o.Albedo *= tex2D(_Detail, IN.uv_Detail).rgb;
                     o.Albedo *= _Color.rgb;
+
+                    // o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
 
                     // Set metallic and smoothness
                     o.Metallic = _Metallic;
@@ -160,5 +164,5 @@ Shader "Custom/3DBoidShader" {
 
                 ENDCG
         }
-            FallBack "Diffuse"
+        FallBack "Diffuse"
 }
