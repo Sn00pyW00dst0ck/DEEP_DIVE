@@ -19,6 +19,11 @@ public class UnderwaterEffects : MonoBehaviour
     [SerializeField]
     GameObject healthBar;
 
+    [SerializeField]
+    AudioSource breathingSound;
+
+    [SerializeField]
+    AudioSource waveSound;
     private void OnTriggerEnter(Collider other)
     {
         RenderSettings.fog = true;
@@ -34,6 +39,8 @@ public class UnderwaterEffects : MonoBehaviour
             obj.drawTreesAndFoliage = false;
         }
         healthBar.SetActive(true);
+        breathingSound.Play();
+        waveSound.Stop();
     }
 
     private void OnTriggerExit(Collider other)
@@ -51,5 +58,7 @@ public class UnderwaterEffects : MonoBehaviour
             obj.drawTreesAndFoliage = false;
         }
         healthBar.SetActive(false);
+        breathingSound.Stop();
+        waveSound.Play();
     }
 }
