@@ -16,6 +16,16 @@ public class UnderwaterEffects : MonoBehaviour
     Terrain[] underwaterTerrains;
 
     [SerializeField]
+    Terrain[] aboveGroundTerrains;
+
+    [SerializeField]
+    GameObject[] underwaterAssets;
+
+    [SerializeField]
+    GameObject[] aboveGroundAssets;
+
+
+    [SerializeField]
     Material skyboxWithoutFog;
 
     [SerializeField]
@@ -25,7 +35,7 @@ public class UnderwaterEffects : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "MainCamera")
+        if(other.CompareTag("MainCamera"))
         {
             RenderSettings.fog = true;
             RenderSettings.skybox = skyboxWithFog;
@@ -43,6 +53,11 @@ public class UnderwaterEffects : MonoBehaviour
                 obj.drawTreesAndFoliage = true;
             }
 
+            foreach (Terrain obj in aboveGroundTerrains)
+            {
+                obj.drawTreesAndFoliage = false;
+            }
+
             healthBar.SetActive(true);
         }
         
@@ -50,16 +65,21 @@ public class UnderwaterEffects : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.tag == "MainCamera")
+        if(other.CompareTag("MainCamera"))
         {
             RenderSettings.fog = false;
             RenderSettings.skybox = skyboxWithoutFog;
 
 
-            // foreach (GameObject obj in underwaterEffects)
-            // {
-            //     obj.SetActive(false);
-            // }
+            //foreach (GameObject obj in underwaterEffects)
+            //{
+            //    obj.SetActive(false);
+            //}
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(true);
+            }
 
             toggler.EnterLand();
 
@@ -68,6 +88,12 @@ public class UnderwaterEffects : MonoBehaviour
             {
                 obj.drawTreesAndFoliage = false;
             }
+
+            foreach (Terrain obj in aboveGroundTerrains)
+            {
+                obj.drawTreesAndFoliage = true;
+            }
+
             healthBar.SetActive(false);
         }
         

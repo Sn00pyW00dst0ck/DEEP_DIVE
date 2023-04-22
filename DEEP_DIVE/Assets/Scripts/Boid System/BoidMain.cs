@@ -148,7 +148,7 @@ public class BoidMain : MonoBehaviour
         rp.matProps.SetBuffer("boids", boidBuffer);
         rp.matProps.SetVector("_Offset", transform.position);
         Debug.Log(rp.matProps.GetVector("_Offset"));
-        rp.shadowCastingMode = ShadowCastingMode.On;
+        rp.shadowCastingMode = ShadowCastingMode.Off;
         rp.receiveShadows = false;
         rp.worldBounds = new Bounds(Vector3.zero, Vector3.one * 1000);
 
