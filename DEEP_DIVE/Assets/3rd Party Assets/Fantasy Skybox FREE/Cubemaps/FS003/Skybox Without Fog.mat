@@ -2,14 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FS003_Day_Cubemap
-  m_Shader: {fileID: 10700, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
+  m_Name: Skybox Without Fog
+  m_Shader: {fileID: 4800000, guid: 82881a2d011b0964696411c822cdd00b, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -39,11 +40,32 @@ Material:
         m_Texture: {fileID: 2800000, guid: af892a80d6997c243a3fa15640a841d2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Tex:
+        m_Texture: {fileID: 8900000, guid: 24941804827e1524eb70477f7f68a111, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _UpTex:
         m_Texture: {fileID: 2800000, guid: aea3686eb786ed74a987296077388968, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
-    m_Colors: []
+    m_Floats:
+    - _CubemapPosition: 0
+    - _Cubemapp: 1
+    - _EnableFog: 0
+    - _EnableRotation: 0
+    - _Exposure: 1
+    - _FogFill: 1
+    - _FogHeight: 1
+    - _FogIntensity: 1
+    - _FogMessage: 0
+    - _FogPosition: 0
+    - _FogSmoothness: 0.01
+    - _Fogg: 1
+    - _Rotation: 0
+    - _RotationSpeed: 1
+    - _Rotationn: 1
+    - _SkyboxExtended: 1
+    m_Colors:
+    - _TintColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_BuildTextureStacks: []

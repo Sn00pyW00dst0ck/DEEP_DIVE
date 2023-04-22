@@ -15,12 +15,30 @@ public class UnderwaterEffects : MonoBehaviour
     [SerializeField]
     Terrain[] underwaterTerrains;
 
+    [SerializeField]
+    Terrain[] aboveGroundTerrains;
+
+    [SerializeField]
+    GameObject[] underwaterAssets;
+
+    [SerializeField]
+    GameObject[] aboveGroundAssets;
+
+
+    [SerializeField]
+    Material skyboxWithoutFog;
+
+    [SerializeField]
+    Material skyboxWithFog;
+
     public GameObject healthBar;
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "MainCamera")
+        if(other.CompareTag("MainCamera"))
         {
             RenderSettings.fog = true;
+            RenderSettings.skybox = skyboxWithFog;
 
             foreach (GameObject obj in underwaterEffects)
             {
@@ -28,10 +46,16 @@ public class UnderwaterEffects : MonoBehaviour
             }
 
             toggler.EnterWater();
+
             // Turn on all the underwater trees
             foreach (Terrain obj in underwaterTerrains)
             {
                 obj.drawTreesAndFoliage = true;
+            }
+
+            foreach (Terrain obj in aboveGroundTerrains)
+            {
+                obj.drawTreesAndFoliage = false;
             }
 
             healthBar.SetActive(true);
@@ -41,19 +65,35 @@ public class UnderwaterEffects : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.tag == "MainCamera")
+        if(other.CompareTag("MainCamera"))
         {
             RenderSettings.fog = false;
-            foreach (GameObject obj in underwaterEffects)
+            RenderSettings.skybox = skyboxWithoutFog;
+
+
+            //foreach (GameObject obj in underwaterEffects)
+            //{
+            //    obj.SetActive(false);
+            //}
+
+            for (int i = 0; i < transform.childCount; i++)
             {
-                obj.SetActive(false);
+                transform.GetChild(i).gameObject.SetActive(true);
             }
+
             toggler.EnterLand();
+
             // Turn off all the underwater trees
             foreach (Terrain obj in underwaterTerrains)
             {
                 obj.drawTreesAndFoliage = false;
             }
+
+            foreach (Terrain obj in aboveGroundTerrains)
+            {
+                obj.drawTreesAndFoliage = true;
+            }
+
             healthBar.SetActive(false);
         }
         
