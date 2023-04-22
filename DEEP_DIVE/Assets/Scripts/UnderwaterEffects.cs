@@ -15,12 +15,13 @@ public class UnderwaterEffects : MonoBehaviour
     [SerializeField]
     Terrain[] underwaterTerrains;
 
-
     [SerializeField]
     Material skyboxWithoutFog;
 
     [SerializeField]
     Material skyboxWithFog;
+
+    public GameObject healthBar;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -41,6 +42,8 @@ public class UnderwaterEffects : MonoBehaviour
             {
                 obj.drawTreesAndFoliage = true;
             }
+
+            healthBar.SetActive(true);
         }
         
     }
@@ -65,6 +68,7 @@ public class UnderwaterEffects : MonoBehaviour
             {
                 obj.drawTreesAndFoliage = false;
             }
+            healthBar.SetActive(false);
         }
         
     }
