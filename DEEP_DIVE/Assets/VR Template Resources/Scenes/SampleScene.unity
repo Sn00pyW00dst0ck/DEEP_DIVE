@@ -16,7 +16,7 @@ RenderSettings:
   serializedVersion: 9
   m_Fog: 0
   m_FogColor: {r: 0.20803669, g: 0.7591637, b: 0.8018868, a: 1}
-  m_FogMode: 1
+  m_FogMode: 3
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 250
@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1.3
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 4c12da8dc5dced74e838120da11725a0, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 874f351ef4bd4704cb56ea8052aa78ed, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -7460,15 +7460,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   underwaterEffects:
-  - {fileID: 1613331884}
+  - {fileID: 1447282203}
+  - {fileID: 1927822999}
+  - {fileID: 1110838302}
+  - {fileID: 403435105}
+  - {fileID: 1912393766}
+  - {fileID: 1756902581}
+  - {fileID: 1082180066}
+  - {fileID: 1590468052}
+  - {fileID: 240864350}
+  - {fileID: 1098722746}
+  - {fileID: 1887290874}
+  - {fileID: 427370454}
+  - {fileID: 363546715}
+  - {fileID: 1561167752}
+  - {fileID: 38630415}
+  - {fileID: 998701851}
+  - {fileID: 188246744}
+  - {fileID: 150662322}
+  - {fileID: 690100750}
+  - {fileID: 1249857082}
+  - {fileID: 87088691}
+  - {fileID: 1294834322}
+  - {fileID: 1445372696}
+  - {fileID: 1682274479}
+  - {fileID: 1125218460}
+  - {fileID: 1095453549}
+  - {fileID: 807427625}
   toggler: {fileID: 1065733625}
   underwaterTerrains:
   - {fileID: 1090064140}
+  - {fileID: 152871275}
   - {fileID: 266433117}
   - {fileID: 1720068803}
   - {fileID: 805306756}
   - {fileID: 534698514}
-  - {fileID: 152871275}
+  - {fileID: 2038693626}
+  - {fileID: 1182879032}
+  - {fileID: 510765286}
+  - {fileID: 1728621330}
+  - {fileID: 1385014807}
+  - {fileID: 257621593}
+  - {fileID: 435949461}
+  - {fileID: 1271910384}
+  - {fileID: 1360106349}
+  - {fileID: 509676092}
+  - {fileID: 1956960433}
+  skyboxWithoutFog: {fileID: 2100000, guid: 874f351ef4bd4704cb56ea8052aa78ed, type: 2}
+  skyboxWithFog: {fileID: 2100000, guid: 4c12da8dc5dced74e838120da11725a0, type: 2}
 --- !u!114 &1200766010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7558,7 +7597,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1201015714}
-  - component: {fileID: 1201015715}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -7585,65 +7623,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1201015715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1201015713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85d02c90289161142a43a00fc6014901, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  underwaterEffects:
-  - {fileID: 1447282203}
-  - {fileID: 1927822999}
-  - {fileID: 1110838302}
-  - {fileID: 403435105}
-  - {fileID: 1912393766}
-  - {fileID: 1756902581}
-  - {fileID: 1082180066}
-  - {fileID: 1590468052}
-  - {fileID: 240864350}
-  - {fileID: 1098722746}
-  - {fileID: 1887290874}
-  - {fileID: 427370454}
-  - {fileID: 363546715}
-  - {fileID: 1561167752}
-  - {fileID: 38630415}
-  - {fileID: 998701851}
-  - {fileID: 188246744}
-  - {fileID: 150662322}
-  - {fileID: 690100750}
-  - {fileID: 1249857082}
-  - {fileID: 87088691}
-  - {fileID: 1294834322}
-  - {fileID: 1445372696}
-  - {fileID: 1682274479}
-  - {fileID: 1125218460}
-  - {fileID: 1095453549}
-  - {fileID: 807427625}
-  toggler: {fileID: 1065733625}
-  underwaterTerrains:
-  - {fileID: 1090064140}
-  - {fileID: 152871275}
-  - {fileID: 266433117}
-  - {fileID: 1720068803}
-  - {fileID: 805306756}
-  - {fileID: 534698514}
-  - {fileID: 2038693626}
-  - {fileID: 1182879032}
-  - {fileID: 510765286}
-  - {fileID: 1728621330}
-  - {fileID: 1385014807}
-  - {fileID: 257621593}
-  - {fileID: 435949461}
-  - {fileID: 1271910384}
-  - {fileID: 1360106349}
-  - {fileID: 509676092}
-  - {fileID: 1956960433}
 --- !u!4 &1230419797 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1035471210151166853, guid: e99f032fafefe454ea40482d8b496828, type: 3}

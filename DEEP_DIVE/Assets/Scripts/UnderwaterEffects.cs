@@ -15,11 +15,19 @@ public class UnderwaterEffects : MonoBehaviour
     [SerializeField]
     Terrain[] underwaterTerrains;
 
+
+    [SerializeField]
+    Material skyboxWithoutFog;
+
+    [SerializeField]
+    Material skyboxWithFog;
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "MainCamera")
         {
             RenderSettings.fog = true;
+            RenderSettings.skybox = skyboxWithFog;
 
             foreach (GameObject obj in underwaterEffects)
             {
@@ -27,6 +35,7 @@ public class UnderwaterEffects : MonoBehaviour
             }
 
             toggler.EnterWater();
+
             // Turn on all the underwater trees
             foreach (Terrain obj in underwaterTerrains)
             {
@@ -41,11 +50,16 @@ public class UnderwaterEffects : MonoBehaviour
         if(other.tag == "MainCamera")
         {
             RenderSettings.fog = false;
-            foreach (GameObject obj in underwaterEffects)
-            {
-                obj.SetActive(false);
-            }
+            RenderSettings.skybox = skyboxWithoutFog;
+
+
+            // foreach (GameObject obj in underwaterEffects)
+            // {
+            //     obj.SetActive(false);
+            // }
+
             toggler.EnterLand();
+
             // Turn off all the underwater trees
             foreach (Terrain obj in underwaterTerrains)
             {
