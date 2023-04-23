@@ -74,61 +74,61 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
-    - _Density: 0.015
+    - _Density: 0.003
     - _DepthTransparency: 0.2
     - _DetailNormalMapScale: 1
     - _DistanceFade: 0.5
-    - _Distortion: 0.119
+    - _Distortion: 0
     - _DstBlend: 0
     - _EnableCustomFog: 0
     - _EnableProbeRelfections: 0
     - _EnableRealtimeReflections: 1
     - _EnableReflections: 1
-    - _Fade: 2
+    - _Fade: 3
     - _FarTilingDistance: 1000
     - _FoamBlend: 5
     - _FoamContrast: 0.3
-    - _FoamIntensity: 1.5
-    - _FoamSpeed: 0.4
-    - _FoamTiling: 0.1
+    - _FoamIntensity: 1
+    - _FoamSpeed: 0.3
+    - _FoamTiling: 0.4
     - _FoamVisibility: 1
     - _FogDistance: 1000
     - _FogFade: 1
     - _FullTransparency: 0
-    - _Gloss: 0.7
+    - _Gloss: 0.5
     - _Glossiness: 0.5
-    - _LightWrapping: 2
+    - _LightWrapping: 0
     - _MediumTilingDistance: 100
     - _Metallic: 0
     - _Mode: 0
     - _NormalStrength: 2
-    - _NormalTiling: 0.1
+    - _NormalTiling: 0.05
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _ProbeReflectionIntensity: 0.578
+    - _ProbeReflectionIntensity: 0
     - _RealtimeReflectionIntensity: 1
     - _ReflectionIntensity: 0.385
-    - _Refraction: 0.4
+    - _Refraction: 0
     - _RefractionDistance: 10
     - _RefractionFalloff: 1
     - _ShoreFade: 0.56
     - _ShoreTransparency: 0.5
     - _Specular: 1
     - _SrcBlend: 1
-    - _TransparencyFade: 1
+    - _TransparencyFade: 0.1
     - _UVSec: 0
     - _UnderwaterMode: 0
     - _UnderwaterTranspDist: 13.56
     - _UnderwaterTranspFalloff: 0.78
-    - _WaveSpeed: 0.25
+    - _WaveSpeed: 0.075
     - _ZWrite: 1
     - __dirty: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DeepWaterColor: {r: 0.103462085, g: 0.22045635, b: 0.2924528, a: 1}
+    - _DeepWaterColor: {r: 0.14901961, g: 0.49803925, b: 0.9058824, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _FogColor: {r: 1, g: 1, b: 1, a: 1}
-    - _MainColor: {r: 0.47450984, g: 0.98535347, b: 1, a: 1}
-    - _SpecularColor: {r: 0.9528302, g: 0.9162451, b: 0.78653437, a: 1}
+    - _MainColor: {r: 0.47450984, g: 1, b: 0.9696249, a: 1}
+    - _SpecularColor: {r: 0.9852705, g: 0.990566, b: 0.75226945, a: 1}
   m_BuildTextureStacks: []
