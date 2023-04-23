@@ -31,6 +31,9 @@ public class UnderwaterEffects : MonoBehaviour
     [SerializeField]
     Material skyboxWithFog;
 
+    public AudioSource waveSound;
+
+    public AudioSource breathingSound;
     public GameObject healthBar;
 
     private void OnTriggerEnter(Collider other)
@@ -59,6 +62,8 @@ public class UnderwaterEffects : MonoBehaviour
             }
 
             healthBar.SetActive(true);
+            waveSound.Stop();
+            breathingSound.Play();
         }
         
     }
@@ -95,6 +100,8 @@ public class UnderwaterEffects : MonoBehaviour
             }
 
             healthBar.SetActive(false);
+            waveSound.Play();
+            breathingSound.Stop();
         }
         
     }
