@@ -1,0 +1,11 @@
+Model Information:
+* title:	Wall Hook
+* source:	https://sketchfab.com/3d-models/wall-hook-9f1f93b5629f494fbe6ece5a2bd4fe5e
+* author:	Dima Tretiak (https://sketchfab.com/DimaTretiak)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Wall Hook" (https://sketchfab.com/3d-models/wall-hook-9f1f93b5629f494fbe6ece5a2bd4fe5e) by Dima Tretiak (https://sketchfab.com/DimaTretiak) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

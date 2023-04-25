@@ -1,0 +1,11 @@
+Model Information:
+* title:	Scuba Goggles And Snorkel
+* source:	https://sketchfab.com/3d-models/scuba-goggles-and-snorkel-6552ed7809cb4eaca6fd3c987165adbb
+* author:	Turtle_Flipper (https://sketchfab.com/milansaman21)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Scuba Goggles And Snorkel" (https://sketchfab.com/3d-models/scuba-goggles-and-snorkel-6552ed7809cb4eaca6fd3c987165adbb) by Turtle_Flipper (https://sketchfab.com/milansaman21) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
