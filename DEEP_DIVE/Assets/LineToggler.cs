@@ -15,7 +15,7 @@ public class LineToggler : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        toggle = true;
+        toggle = false;
     }
     void Awake()
     {
