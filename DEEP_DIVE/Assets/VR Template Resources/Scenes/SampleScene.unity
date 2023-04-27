@@ -589,6 +589,10 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 112
       objectReference: {fileID: 0}
+    - target: {fileID: 5187956758806804487, guid: 88e98c87a10e3a741bf558b10e4cfd88, type: 3}
+      propertyPath: destroyer
+      value: 
+      objectReference: {fileID: 879090745}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88e98c87a10e3a741bf558b10e4cfd88, type: 3}
 --- !u!4 &38301115 stripped
@@ -2784,10 +2788,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6111036267494455686}
+  - {fileID: 1809496483}
   - {fileID: 387832497}
   - {fileID: 1552220083}
   - {fileID: 879090744}
-  - {fileID: 1809496483}
   m_Father: {fileID: 2068643278}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16265,6 +16269,10 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 112
       objectReference: {fileID: 0}
+    - target: {fileID: 5035564215268127162, guid: ea8173b83f3d32344836af78621f7272, type: 3}
+      propertyPath: destroyer
+      value: 
+      objectReference: {fileID: 879090745}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea8173b83f3d32344836af78621f7272, type: 3}
 --- !u!4 &1220857821 stripped
@@ -18834,6 +18842,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2127286124}
     m_Modifications:
+    - target: {fileID: 6661952465371245761, guid: 4c9bc9fee0a8d194ca1eb58b3eb32e4d, type: 3}
+      propertyPath: destroyer
+      value: 
+      objectReference: {fileID: 879090745}
     - target: {fileID: 6661952465371245763, guid: 4c9bc9fee0a8d194ca1eb58b3eb32e4d, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -20504,6 +20516,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trash Bottle
       objectReference: {fileID: 0}
+    - target: {fileID: 149710145689805520, guid: 5db8f2e4ee7afe04d91817c29026fbe1, type: 3}
+      propertyPath: destroyer
+      value: 
+      objectReference: {fileID: 879090745}
     - target: {fileID: 149710145689805522, guid: 5db8f2e4ee7afe04d91817c29026fbe1, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -22655,7 +22671,7 @@ Transform:
   - {fileID: 710255965}
   - {fileID: 1122049792}
   m_Father: {fileID: 201015821}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1813064716
 GameObject:
