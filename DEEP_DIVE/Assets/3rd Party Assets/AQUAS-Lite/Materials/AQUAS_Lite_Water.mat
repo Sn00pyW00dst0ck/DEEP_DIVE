@@ -107,7 +107,7 @@ Material:
     - _ProbeReflectionIntensity: 0
     - _RealtimeReflectionIntensity: 1
     - _ReflectionIntensity: 0.385
-    - _Refraction: 0
+    - _Refraction: 1
     - _RefractionDistance: 10
     - _RefractionFalloff: 1
     - _ShoreFade: 0.56

@@ -11,9 +11,10 @@ public class BlowUpOnContact : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(GameObject other)
+    private void OnTriggerEnter(Collider other)
     {
-       if (GameObject.ReferenceEquals(other, destroyer))
+       
+       if (GameObject.ReferenceEquals(other.gameObject, destroyer))
        { 
             Debug.Log("first and second are the same");
             Object.Destroy(this.gameObject);
