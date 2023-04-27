@@ -150,7 +150,7 @@ Shader "Custom/3DBoidShader" {
                     // Set color based on textures (TODO: add bumpmap).
                     o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
                     // o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_MainTex));
-                    o.Albedo *= tex2D(_Detail, IN.uv_Detail).rgb;
+                    o.Albedo *= tex2D(_Detail, IN.uv_Detail).rgb * 3;
                     o.Albedo *= _Color.rgb;
 
                     // Set metallic and smoothness
