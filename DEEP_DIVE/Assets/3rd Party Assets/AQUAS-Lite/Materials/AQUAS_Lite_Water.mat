@@ -11,7 +11,6 @@ Material:
   m_Shader: {fileID: 4800000, guid: d54a881b830cae544a72985daaece999, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
-  - _ENABLEREALTIMEREFLECTIONS_ON
   - _ENABLEREFLECTIONS_ON
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 0
@@ -82,7 +81,7 @@ Material:
     - _DstBlend: 0
     - _EnableCustomFog: 0
     - _EnableProbeRelfections: 0
-    - _EnableRealtimeReflections: 1
+    - _EnableRealtimeReflections: 0
     - _EnableReflections: 1
     - _Fade: 3
     - _FarTilingDistance: 1000
