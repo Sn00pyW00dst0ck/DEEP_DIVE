@@ -20770,7 +20770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd9fbecc6e3751d4ba7278c06d3baa12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numBoids: 4000
+  numBoids: 2000
   boidScale: 3
   settings: {fileID: 11400000, guid: 788edd8ab4a12c146a47d44e92b32757, type: 2}
   edgeMargin: 0.5
