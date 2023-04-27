@@ -12,7 +12,7 @@ public class EnableOnPress : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        toggle = false;
+        toggle = true;
     }
 
     private void Awake()
