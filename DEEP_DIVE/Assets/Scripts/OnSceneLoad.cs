@@ -37,7 +37,11 @@ public class OnSceneLoad : MonoBehaviour
     public void QuitApplication()
     {
         StartCoroutine(Fade());
+#if UnityEditor
         UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+        #endif
     }
 
     
