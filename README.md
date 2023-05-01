@@ -3,8 +3,10 @@ A virtual reality SCUBA diving experience created as a final project for CIS4930
 
 Developed by [Gabriel Aldous](https://github.com/Sn00pyW00dst0ck), [Ryan Porter](https://github.com/RyPort), and [Chung To](https://github.com/CC-0000).
 
-
-## 
+![Alt text](/SCREENSHOTS/Deep_Dive_Image_1.jpg)
+![Alt text](/SCREENSHOTS/Deep_Dive_Image_2.jpg)
+![Alt text](/SCREENSHOTS/Deep_Dive_Image_3.jpg)
+![Alt text](/SCREENSHOTS/Deep_Dive_Image_4.jpg)
 
 ## Fish System:
 The custom fish simulation system is based on the concept of boids. 
