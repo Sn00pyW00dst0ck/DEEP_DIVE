@@ -5,8 +5,14 @@ Developed by [Gabriel Aldous](https://github.com/Sn00pyW00dst0ck), [Ryan Porter]
 
 View the demonstration video on YouTube:
 
-[![Deep Dive Demonstration Video](http://img.youtube.com/vi/cCSZYt86GEU/0.jpg)](http://www.youtube.com/watch?v=cCSZYt86GEU "Video Title")
-
+<div align="center">
+      <a href="http://www.youtube.com/watch?v=cCSZYt86GEU">
+        <img 
+          src="https://img.youtube.com/vi/cCSZYt86GEU/0.jpg" 
+          alt="Deep Dive Demonstration Video" 
+          style="width:70%;">
+      </a>
+</div>
 
 ## Screenshots
 
